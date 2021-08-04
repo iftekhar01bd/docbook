@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\PostController;
+use App\Notifications\PostNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\PostPrescription;
 use App\Http\Controllers\RecommendDoctor;
+use App\Models\Doctor;
 
 Route::post('user', [UserAuth::class, 'userLogin']);
 Route::post('reg', [UserAuth::class, 'userRegister']);
@@ -66,10 +69,15 @@ Route::get('/home', function () {
 Route::get('/doctorhome', function () {
     if(session()->has('doctor')){
         $se = session('doctor');
-        $post_info = DB::select("select * from med_posts");
+        $post_info = DB::select("select * from med_posts order by id desc");
+        
         $doc_info = DB::select("select * from doctors where email='$se'");
         $patient_info = DB::select("select * from patients");
-        return view('doctorhome', ['post_info' => $post_info, 'doc_info'=>$doc_info, 'patient_info' => $patient_info]);
+        $user_id = Doctor::where('email', $se)->first()->id;
+        $users = Doctor::find($user_id);
+
+
+        return view('doctorhome', ['users' => $users, 'post_info' => $post_info, 'doc_info'=>$doc_info, 'patient_info' => $patient_info]);
     
     }else{
         return view('login');
@@ -133,8 +141,19 @@ Route::get('/home/viewpost/give/{id}', function($id){
     $post_info = $post_info[0];
         $doc_info = DB::select("select * from doctors where email='$se'");
         $patient_info = DB::select("select * from patients");
+        
+    $pdf = DB::select("select pdf from med_posts where id='$id'");
+   
+    $pat_email =  DB::select("select patient_email from med_posts where id='$id'");
+    $e = $pat_email[0]->patient_email;
+    //print_r();
+    $images =  DB::select("select image from med_posts where id='$id'");
 
-    return view('prescription',  ['id' => $id, 'post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
+    
+    $patient_detail = DB::select("select * from patients where email='$e'");
+
+    return view('prescription',  ['images' => $images, 'pat_email'=>$e, 'patient_detail' => $patient_detail, 'pdf' => $pdf, 'id' => $id, 'post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
+ 
 })->name('give_pres');
 
 
@@ -152,3 +171,12 @@ Route::get('home/followups', function(){
     $patient_info = DB::select("select * from patients");
     return view('followup', ['email' => $se, 'follows' => $follows, 'patient_info' => $patient_info, 'doc_info' => $doc_info]);
 })->name('followups');
+
+
+Route::get('doctorhome/deletenotification/{id}', function($id){
+DB::delete("DELETE from notifications where id='$id'");
+return redirect('doctorhome/');
+
+   
+
+});

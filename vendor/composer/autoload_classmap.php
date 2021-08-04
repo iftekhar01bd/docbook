@@ -32,6 +32,7 @@ return array(
     'App\\Models\\Patient' => $baseDir . '/app/Models/Patient.php',
     'App\\Models\\Prescription' => $baseDir . '/app/Models/Prescription.php',
     'App\\Models\\SpecialistDoctor' => $baseDir . '/app/Models/SpecialistDoctor.php',
+    'App\\Notifications\\PostNotification' => $baseDir . '/app/Notifications/PostNotification.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

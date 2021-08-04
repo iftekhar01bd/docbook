@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\MedPost;
 use App\Models\FollowUp;
 use Illuminate\Support\Carbon;
+use App\Models\Doctor;
+use App\Models\Patient;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\DB;
+use App\Notifications\PostNotification;
 
 class PostController extends Controller
 {
@@ -43,6 +48,20 @@ class PostController extends Controller
                 
             ]);
 
+            $doctor_id = DB::select("select id from doctors where email='$request->follow_input'");
+
+            $doctor = Doctor::find($doctor_id[0]->id);
+            $message = " has posted his issue at ".date("h:i:sa")." ";
+            $patientId = "Unknown ID";
+            $category = $request->problemtype;
+            foreach (Patient::all() as $pat) {
+                if($pat->email == $request->email){
+                    $patientId = $pat->userid;
+                }
+               
+            }
+            Notification::send($doctor, new PostNotification($patientId, $message, $category));
+
         }else{
             MedPost::insert([
                 'patient_email' => $request->email,
@@ -56,6 +75,20 @@ class PostController extends Controller
                 'specialist_count' => 0
                 
             ]);
+
+            // NOTIFICATION CODE HERE
+            $doctor = Doctor::all();
+            $message = " has posted his issue at ".date("h:i:sa")." ";
+            $patientId = "Unknown ID";
+            $category = $request->problemtype;
+            foreach (Patient::all() as $pat) {
+                if($pat->email == $request->email){
+                    $patientId = $pat->userid;
+                }
+               
+            }
+            Notification::send($doctor, new PostNotification($patientId, $message, $category));
+
         }
        
 

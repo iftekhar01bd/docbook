@@ -30,7 +30,7 @@ class CreateDoctorsTable extends Migration
             $table->string('licenseno');
             $table->integer('experience');
             $table->string('degree');
-
+            $table->string('notifications');
             $table->integer('age');
             $table->string('gender');
             $table->string('phone');

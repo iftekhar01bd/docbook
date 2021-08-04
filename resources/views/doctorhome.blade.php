@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 <!--    -------font awesome kit link------->
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
+
     
     
     
@@ -69,7 +70,55 @@
         <li class="nav-item">
           <a class="nav-link" href="#">News Feed</a>
         </li>
-        <li class="nav-item">
+
+        
+        
+       
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Notifications
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+       
+           
+              @forelse ($users->notifications as $notification)
+              @if($notification->data['category'] != "FOLLOW UP")
+              <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+              @endif
+              @empty
+              <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+             
+              @endforelse
+            
+           
+          </ul>
+        </li>
+          
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Follow Up Notifications
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+       
+           
+              @forelse ($users->notifications as $notification)
+              @if($notification->data['category'] == "FOLLOW UP")
+              <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+              @endif
+              
+              @empty
+              <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+             
+              @endforelse
+            
+           
+          </ul>
+        </li>
+          
+          <li>
+
           <a class="nav-link" href="">View Prescribed Posts</a>
         </li>
         <li class="nav-item">
@@ -431,7 +480,7 @@
 
 
 <!-----------bootstrap js link------------->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
 
 </body>
 @endif

@@ -322,6 +322,51 @@
               </div>
 
 
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    @foreach($pdf as $p)
+                  <iframe height='600' width='550' src="/{{$p->pdf}}" ></iframe>
+  
+                  @endforeach
+                  </div>
+
+                  <div class="col-md-6">
+                   
+                    @foreach($patient_detail as $x)
+                    
+            <span style="font-size: 20pt; font-weight: bold;">Patient Picture: </span><a href="#"><img width='100px' height='80px' src="/{{ $x->propic }}" alt="profile pic"></a><br/>
+            
+                    <span style="font-size: 20pt; font-weight: bold;"> Patient ID: {{$x->userid}}</span><br/>
+                        
+                        <span style="font-size: 20pt; font-weight: bold;"> Patient Email: {{$x->email}}</span><br/>
+                        <span style="font-size: 20pt; font-weight: bold;"> Patient Full Name: {{$x->fname}} {{$x->lname}}</span><br/>
+                        <span style="font-size: 20pt; font-weight: bold;"> Patient Age: {{$x->age}}</span><br/>
+                        <span style="font-size: 20pt; font-weight: bold;"> Patient Gender: {{$x->gender}}</span><br/>
+                        <span style="font-size: 20pt; font-weight: bold;"> Patient Phone: {{$x->phone}}</span><br/>
+                        <span style="font-size: 20pt; font-weight: bold;"> Patient BloodGroup: {{$x->bloodgroup}}</span><br/>
+
+                    @endforeach
+                  </div>
+                </div>
+
+                
+
+                
+                
+              </div>
+
+              <div class="container">
+                <span style="font-size: 20pt; font-weight: bold;">Patient Picture Uploaded:</span> <br/>
+                @foreach($images as $im)
+                <a href="#"><img width='800px' height='600px' src="/{{ $im->image}}" alt="image pic"></a><br/>
+                
+                @endforeach
+
+
+              </div>
+
+
 
 
 
