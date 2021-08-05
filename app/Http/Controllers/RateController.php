@@ -27,7 +27,7 @@ class RateController extends Controller
                 
             ]);
 
-            $all_ratings = Rating::all();
+            $all_ratings = DB::table('ratings')->where('doctor_id', $doctorid)->get();
             $sum = 0;
             foreach($all_ratings as $r){
                 $sum += $r->rating;
@@ -40,7 +40,7 @@ class RateController extends Controller
             }
 
             Doctor::where('id', $doctorid)->update(array('rating' => $sum));
-            return "Rating inserted";
+            return redirect()->route('view_profile');
 
         }else{
             $all_ratings = Rating::all();
@@ -72,8 +72,8 @@ class RateController extends Controller
 
             Rating::where('patient_id', $patientid)->where('doctor_id', $doctorid)->update(array('rating' => $sum));
 
-            $all_ratings = Rating::all();
-            $sum = $rating;
+            $all_ratings = DB::table('ratings')->where('doctor_id', $doctorid)->get();
+            $sum = 0;
             $c = 0;
 
             foreach($all_ratings as $r){
@@ -89,10 +89,14 @@ class RateController extends Controller
                
                     $sum += $r->rating;
                 }
+            }else{
+                $sum = $rating;
+
+
             }
              
  
-             echo $sum;
+            //echo $sum;
                  $sum = floor($sum / $c);
 
             Doctor::where('id', $doctorid)->update(array('rating' => $sum));
@@ -103,7 +107,8 @@ class RateController extends Controller
 
 
 
-            return "Rating updated";
+            return redirect()->route('view_profile');
+
 
         }
         
