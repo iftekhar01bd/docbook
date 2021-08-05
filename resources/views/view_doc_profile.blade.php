@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocBook : Patient Homepage</title>
 <!--    ------css link---------->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{ URL::asset('css/profile2.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+
 <!--    -------font awesome kit link------->
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
     
@@ -97,7 +102,7 @@
               <div class="profile-photo">
                 
             @foreach($info as $i)
-            <a href="#"><img width='100px' height='80px' src={{ $i->propic }} alt="profile pic"></a>
+            <a href="#"><img width='100px' height='80px' src="/{{ $i->propic }}" alt="profile pic"></a>
             @endforeach
              
             
@@ -321,15 +326,117 @@
                   </div>
                  </div>
               </div>
-              
+
+                
         
-   
-  
+        
+              <div class="doctors">
 
-<div class="container">
-  <h2>Doctors Blog Feed Here</h2>
-</div>
+                @foreach($docs as $d)
+                   <div class="doc_info">
+    
+                     <div class="pic_d">
+    
+                        <img class="doc_pic" width='100px' height='80px' src="/{{ $d->propic }}" alt="profile pic">
+    
+    
+    
+                     </div>
+    
+                     <div class="details">
+                         <span>{{$d->fname}} {{$d->lname}}</span>
+                         <span>Speciality: {{$d->speciality}}</span>
+                         
+                            @if($d->rating == 0.0)
+                            <div class="rate">
+                                <span>Rating:  </span> 
+                            <i class="bi bi-star-fill" style="color:gray;"></i>
+                            <i class="bi bi-star-fill" style="color:gray;"></i>
+                            <i class="bi bi-star-fill" style="color:gray;"></i>
+                            <i class="bi bi-star-fill" style="color:gray;"></i>
+                            <i class="bi bi-star-fill" style="color:gray;"></i>
+                            <span> ({{$d->rating}})</span>
+                            </div>
+                            @elseif($d->rating == 1.0)
+                            <div class="rate">
+                                <span>Rating:  </span> 
+                               <i class="bi bi-star-fill" style="color:yellow;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <span> ({{$d->rating}})</span>
+                            </div>
 
+                            @elseif($d->rating == 2.0)
+                            <div class="rate">
+                                <span>Rating:  </span> 
+                               <i class="bi bi-star-fill" style="color:yellow;"></i>
+                               <i class="bi bi-star-fill" style="color:yellow;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <span> ({{$d->rating}})</span>
+                            </div>
+
+                            @elseif($d->rating == 3.0)
+                            <div class="rate">
+                                <span>Rating:  </span> 
+                               <i class="bi bi-star-fill" style="color:yellow;"></i>
+                               <i class="bi bi-star-fill" style="color:yellow;"></i>
+                               <i class="bi bi-star-fill" style="color:yellow;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <span> ({{$d->rating}})</span>
+                            </div>
+
+                            @elseif($d->rating == 4.0)
+                            <div class="rate">
+                                <span>Rating:  </span> 
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:gray;"></i>
+                               <span> ({{$d->rating}})</span>
+                            </div>
+
+                            @elseif($d->rating == 5.0)
+                            <div class="rate">
+                                <span>Rating:  </span> 
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <i class="bi bi-star-fill" style="color:yellow"></i>
+                               <span> ({{$d->rating}})</span>
+                            </div>
+                            @endif
+                          
+                         <span>Hospital: {{$d->hospital}}</span>
+                         <span>Email: {{$d->email}}</span>
+    
+    
+                         
+    
+    
+    
+    
+                    </div>
+    
+                   <div class="buttons">
+                    <a href="view_doctors/{{$d->id}}" class="btn btn-primary">View Profile</a>
+                   </div>
+    
+                   </div>
+
+                   
+                @endforeach
+
+                
+    
+    
+            </div>
 
 
 
@@ -393,7 +500,7 @@
 
 
 <!-----------bootstrap js link------------->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
 
 </body>
 
@@ -413,3 +520,100 @@
 
 @endif
 </html>
+
+    <!-- 
+    <div class="container">
+
+        <div class="container_tab">
+        <div class="tabs">
+
+            <span class="tab_t">
+               <a href=""> Home</a>
+            </span>
+
+            <span class="tab_t">
+                <a href=""> News Feed</a>
+            </span>
+
+            <span class="tab_t">
+                <a href=""> Get Consultation</a>
+            </span>
+
+            <div class="mid">
+                
+
+            </div>
+
+
+          
+
+
+        </div>
+
+        <div class="prof">
+                
+            @foreach($info as $i)
+            <a href="#"><img class="pic" width='100px' height='80px' src="/{{ $i->propic }}" alt="profile pic"></a>
+            @endforeach
+
+            <span class="title">{{session('patient')}}</span>
+            
+
+        </div>
+
+
+           
+          
+
+
+            
+
+        </div>
+
+
+        <div class="doctors">
+
+            @foreach($docs as $d)
+               <div class="doc_info">
+
+                 <div class="pic_d">
+
+                    <img class="doc_pic" width='100px' height='80px' src="/{{ $d->propic }}" alt="profile pic">
+
+
+
+                 </div>
+
+                 <div class="details">
+                     <span>{{$d->fname}} {{$d->lname}}</span>
+                     <span>Rating: * * * * * </span>
+                     <span>Hospital: {{$d->hospital}}</span>
+                     <span>Email: {{$d->email}}</span>
+
+
+                     
+
+
+
+
+                </div>
+
+               <div class="buttons">
+                <button class="ui green button">View Profile</button>
+               </div>
+
+               </div>
+            @endforeach
+
+
+        </div>
+
+        <div class="footer">
+
+    <span>DOCCBOOK - FOOTER</span>
+
+        </div>
+
+    </div>
+
+-->

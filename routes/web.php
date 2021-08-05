@@ -10,6 +10,7 @@ use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\PostPrescription;
 use App\Http\Controllers\RecommendDoctor;
+use App\Http\Controllers\RateController;
 use App\Models\Doctor;
 
 Route::post('user', [UserAuth::class, 'userLogin']);
@@ -180,3 +181,24 @@ return redirect('doctorhome/');
    
 
 });
+
+Route::get('home/view_doctors', function(){
+    $se = session('patient');
+    $info = DB::select("select * from patients where email='$se'");
+    $docs = DB::select("select * from doctors");
+
+    return view("view_doc_profile", ['info' => $info, 'docs' => $docs]);
+})->name('view_profile');
+
+
+Route::get('home/view_doctors/{id}', function($id){
+    $se = session('patient');
+    $info = DB::select("select * from patients where email='$se'");
+    $docs = DB::select("select * from doctors where id='$id'");
+
+    return view("doc_profile", ['info' => $info, 'docs' => $docs]);
+});
+
+Route::get('home/view_doctors/rate/{patientid}/{doctorid}/{rate}', [RateController::class, 'rate']);
+
+

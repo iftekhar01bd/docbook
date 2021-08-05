@@ -53,7 +53,7 @@ class PostPrescription extends Controller
                 $i += 1;
             }
 
-            $output = $output."\n";
+            $output = $output."#";
 
             $i = 0;
             $index = count($request->input('time')) - 1;
@@ -70,7 +70,7 @@ class PostPrescription extends Controller
             }
 
             $i = 0;
-            $output = $output."\n";
+            $output = $output."#";
             $index = count($request->input('continue')) - 1;
             foreach($request->input('continue') as $name => $value) {
               
@@ -84,7 +84,7 @@ class PostPrescription extends Controller
                 $i += 1;
             }
 
-            $output = $output."\n";
+            $output = $output."#";
             $i = 0;
             $index = count($request->input('intake')) - 1;
             foreach($request->input('intake') as $name => $value) {
@@ -99,7 +99,7 @@ class PostPrescription extends Controller
                 $i += 1;
             }
 
-            $output = $output."\n";
+            $output = $output."#";
             $i = 0;
             $index = count($request->input('describe')) - 1;
             foreach($request->input('describe') as $name => $value) {
@@ -122,7 +122,7 @@ class PostPrescription extends Controller
                 }
                 $i += 1;
             }
-            $output = $output."\n";
+            $output = $output."#";
 
             $i = 0;
             $index = count($request->input('test_name')) - 1;
@@ -138,7 +138,7 @@ class PostPrescription extends Controller
                 $i += 1;
             }
             $i = 0;
-            $output = $output."\n";
+            $output = $output."#";
             $index = count($request->input('reason')) - 1;
             foreach($request->input('reason') as $name => $value) {
               
@@ -152,7 +152,7 @@ class PostPrescription extends Controller
                 $i += 1;
             }
 
-            $output = $output."\n";
+            $output = $output."#";
             $i = 0;
             $index = count($request->input('hospital')) - 1;
             foreach($request->input('hospital') as $name => $value) {
@@ -167,7 +167,7 @@ class PostPrescription extends Controller
                 $i += 1;
             }
 
-            $output = $output."\n";
+            $output = $output."#";
             $i = 0;
             $index = count($request->input('advice')) - 1;
             foreach($request->input('advice') as $name => $value) {
@@ -191,7 +191,7 @@ class PostPrescription extends Controller
                 $i += 1;
             }
 
-            $output = $output."\n";
+            $output = $output."#";
             $i = 0;
             $index = count($request->input('tips')) - 1;
             foreach($request->input('tips') as $name => $value) {
@@ -221,10 +221,7 @@ class PostPrescription extends Controller
           // echo '<script>alert("'.$output.'"); </script>';
 
        
-          $d = date("Y_m_d_h_i");
-          $pres_path = 'prescriptions/'.$request->input('post_id').'_'.$d.'.txt';
-
-          Storage::put($pres_path, $output . PHP_EOL, FILE_APPEND);
+         
           $data = $request->input();
 
          
@@ -236,7 +233,7 @@ class PostPrescription extends Controller
           Prescription::insert([
               'doctor_email' => session('doctor'),
               'patient_email' => $request->pat_email,
-              'information' => 'storage/app/'.$pres_path,
+              'information' => $output,
               'created_at' => \Carbon\Carbon::now()->toDateTimeString()
               
           ]);

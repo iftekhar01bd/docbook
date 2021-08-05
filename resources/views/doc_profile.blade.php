@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocBook : Patient Homepage</title>
 <!--    ------css link---------->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{ URL::asset('css/profile.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+
 <!--    -------font awesome kit link------->
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
     
@@ -97,7 +102,7 @@
               <div class="profile-photo">
                 
             @foreach($info as $i)
-            <a href="#"><img width='100px' height='80px' src={{ $i->propic }} alt="profile pic"></a>
+            <a href="#"><img width='100px' height='80px' src="/{{ $i->propic }}" alt="profile pic"></a>
             @endforeach
              
             
@@ -321,15 +326,109 @@
                   </div>
                  </div>
               </div>
-              
+
+                
         
-   
-  
+        
+              <div class="infoMain">
+                @foreach($docs as $d)
+              <div class="info">
+                <img class="profile_pic" src="/{{ $d->propic }}" alt="profile pic">
+                  <span class="text">Name: {{$d->fname}} {{$d->lname}}</span>
 
-<div class="container">
-  <h2>Doctors Blog Feed Here</h2>
-</div>
+                 
+    
 
+
+              </div>
+
+              <div class="blank">
+
+                <div class="rating">
+                    <span class="text">Rate Doctor -> </span>
+    
+                    @foreach($info as $p)
+                    <a href="rate/{{$p->id}}/{{$d->id}}/1" ><i class="bi bi-star-fill" style="color:gray;"></i></a>
+                    <a href="rate/{{$p->id}}/{{$d->id}}/2" ><i class="bi bi-star-fill" style="color:gray;"></i></a>
+                    <a href="rate/{{$p->id}}/{{$d->id}}/3" ><i class="bi bi-star-fill" style="color:gray;"></i></a>
+                    <a href="rate/{{$p->id}}/{{$d->id}}/4" ><i class="bi bi-star-fill" style="color:gray;"></i></a>
+                    <a href="rate/{{$p->id}}/{{$d->id}}/5" ><i class="bi bi-star-fill" style="color:gray;"></i></a>
+    
+                    @endforeach
+    
+    
+                </div>
+             
+              <div class="info">
+                <span class="text">Speciality In: {{$d->speciality}}</span>
+
+            </div>
+            
+            <div class="info">
+                <span class="text">Gender: {{$d->gender}}</span>
+              
+
+            </div>
+           
+              <div class="info">
+                  <span class="text">Email: {{$d->email}}</span>
+<div class="blank">
+
+              </div>
+
+              </div>
+              
+
+              <div class="info">
+                <span class="text">Chamber Address: {{$d->chamberaddress}}</span>
+
+
+            </div>
+           
+
+            <div class="info">
+                <span class="text">Hospital: {{$d->hospital}}</span>
+
+
+            </div>
+           
+            <div class="info">
+                <span class="text">Experience: {{$d->experience}} years</span>
+
+
+            </div>
+          
+
+            <div class="info">
+                <span class="text">Degree: {{$d->degree}}</span>
+
+
+            </div>
+           
+
+            <div class="info">
+                <span class="text">Contact Number: {{$d->phone}}</span>
+
+
+            </div>
+
+        </div>
+
+           
+
+
+              @endforeach
+
+              <a class="btn btn-primary" href="javascript:history.back()">Go Back</a>
+        
+    
+    </div>
+
+
+
+              
+    
+    
 
 
 
@@ -393,7 +492,7 @@
 
 
 <!-----------bootstrap js link------------->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
 
 </body>
 
@@ -413,3 +512,100 @@
 
 @endif
 </html>
+
+    <!-- 
+    <div class="container">
+
+        <div class="container_tab">
+        <div class="tabs">
+
+            <span class="tab_t">
+               <a href=""> Home</a>
+            </span>
+
+            <span class="tab_t">
+                <a href=""> News Feed</a>
+            </span>
+
+            <span class="tab_t">
+                <a href=""> Get Consultation</a>
+            </span>
+
+            <div class="mid">
+                
+
+            </div>
+
+
+          
+
+
+        </div>
+
+        <div class="prof">
+                
+            @foreach($info as $i)
+            <a href="#"><img class="pic" width='100px' height='80px' src="/{{ $i->propic }}" alt="profile pic"></a>
+            @endforeach
+
+            <span class="title">{{session('patient')}}</span>
+            
+
+        </div>
+
+
+           
+          
+
+
+            
+
+        </div>
+
+
+        <div class="doctors">
+
+            @foreach($docs as $d)
+               <div class="doc_info">
+
+                 <div class="pic_d">
+
+                    <img class="doc_pic" width='100px' height='80px' src="/{{ $d->propic }}" alt="profile pic">
+
+
+
+                 </div>
+
+                 <div class="details">
+                     <span>{{$d->fname}} {{$d->lname}}</span>
+                     <span>Rating: * * * * * </span>
+                     <span>Hospital: {{$d->hospital}}</span>
+                     <span>Email: {{$d->email}}</span>
+
+
+                     
+
+
+
+
+                </div>
+
+               <div class="buttons">
+                <button class="ui green button">View Profile</button>
+               </div>
+
+               </div>
+            @endforeach
+
+
+        </div>
+
+        <div class="footer">
+
+    <span>DOCCBOOK - FOOTER</span>
+
+        </div>
+
+    </div>
+
+-->

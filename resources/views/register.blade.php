@@ -25,6 +25,8 @@
             $("#name").show();
             $("#gender").show();
             $("#age").show();
+            $("#special").show();
+
         }else if(user == "patient"){
             $("#blood").show();
             $("#email").show();
@@ -37,6 +39,7 @@
             $("#name").show();
             $("#gender").show();
             $("#age").show();
+            $("#special").hide();
 
         }else if(user == "specialist"){
             $("#blood").hide();
@@ -50,6 +53,8 @@
             $("#name").show();
             $("#gender").show();
             $("#age").show();
+            $("#special").show();
+
 
         }else if(user == "admin"){
             $("#email").show();
@@ -64,6 +69,8 @@
             $("#age").hide();
             $("#gender").hide();
             $("#blood").hide();
+            $("#special").hide();
+
 
         }
         }
@@ -83,6 +90,8 @@
             $("#name").show();
             $("#gender").show();
             $("#age").show();
+            $("#special").show();
+
         }else if(user == "patient"){
             $("#blood").show();
             $("#email").show();
@@ -95,6 +104,8 @@
             $("#name").show();
             $("#gender").show();
             $("#age").show();
+            $("#special").hide();
+
 
         }else if(user == "specialist"){
             $("#blood").hide();
@@ -122,6 +133,8 @@
             $("#age").hide();
             $("#gender").hide();
             $("#blood").hide();
+            $("#special").hide();
+
 
         }
     });
@@ -158,6 +171,8 @@
       <div class="container" name="doc_div" id="doc_div">
       <label>Home Address</label>
       <input type="text" id="homeaddress" class="fadeIn third" name="homeaddress" placeholder="">
+      <label>Speciality</label>
+      <input type="text" id="special" class="fadeIn third" name="special" placeholder="">
       <label>Chamber Address</label>
       <input type="text" id="chamberaddress" class="fadeIn third" name="chamberaddress" placeholder="">
       <label>Hospital Name</label>

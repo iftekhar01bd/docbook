@@ -10,6 +10,9 @@ class Doctor extends Model
 {
     use HasFactory;
     use Notifiable;
+    public $timestamps = false;
+
+    
     protected $connection = 'mysql'; 
     protected $fillable = [
         'email'

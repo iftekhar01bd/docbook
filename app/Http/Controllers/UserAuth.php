@@ -200,6 +200,8 @@ class UserAuth extends Controller
                 'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
                 'age' => 'required|integer|min:8|max:100',
                 'gender' => 'required|max:6',
+                'special' => 'required|max:20',
+
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             ]);
             
@@ -226,6 +228,9 @@ class UserAuth extends Controller
                  'licenseno' => $request->licenseno,
                  'experience' => $request->experience,
                  'degree' => $request->degree,
+                 'speciality' => $request->special,
+                 'rating'=>0.0,
+                 
 
                 'lname' => $request->lname,
                 'propic' => "doctor_propics/".$imageName,
@@ -255,6 +260,8 @@ class UserAuth extends Controller
                 'experience' => 'required|integer',
                 'degree' => 'required|max:255',
                 'field' => 'required|max:255',
+                'special' => 'required|max:20',
+
                 'lname' => 'required|max:255',
                 'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
                 'propic' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:11048',
@@ -286,6 +293,8 @@ class UserAuth extends Controller
                  'licenseno' => $request->licenseno,
                  'experience' => $request->experience,
                  'degree' => $request->degree,
+                 'speciality' => $request->special,
+
                  'field' => $request->field,
                 'propic' => "specialist_propics/".$imageName,
                 'phone' => $request->phone,
