@@ -29,10 +29,9 @@ class CreateDoctorsTable extends Migration
             $table->string('gradyear');
             $table->string('speciality');
             $table->decimal('rating');
-            $table->string('licenseno');
             $table->integer('experience');
             $table->string('degree');
-            
+            $table->string('bmdc');
             $table->integer('age');
             $table->string('gender');
             $table->string('phone');

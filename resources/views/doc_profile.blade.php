@@ -358,6 +358,74 @@
     
     
                 </div>
+                
+                  @foreach($docs as $d)
+                @if($d->rating == 0.0)
+                <div class="rate">
+                  <span>Rating:  </span> 
+              <i class="bi bi-star-fill" style="color:gray;"></i>
+              <i class="bi bi-star-fill" style="color:gray;"></i>
+              <i class="bi bi-star-fill" style="color:gray;"></i>
+              <i class="bi bi-star-fill" style="color:gray;"></i>
+              <i class="bi bi-star-fill" style="color:gray;"></i>
+              <span> ({{$d->rating}})</span>
+              </div>
+              @elseif($d->rating == 1.0)
+              <div class="rate">
+                  <span>Rating:  </span> 
+                 <i class="bi bi-star-fill" style="color:yellow;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <span> ({{$d->rating}})</span>
+              </div>
+
+              @elseif($d->rating == 2.0)
+              <div class="rate">
+                  <span>Rating:  </span> 
+                 <i class="bi bi-star-fill" style="color:yellow;"></i>
+                 <i class="bi bi-star-fill" style="color:yellow;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <span> ({{$d->rating}})</span>
+              </div>
+
+              @elseif($d->rating == 3.0)
+              <div class="rate">
+                  <span>Rating:  </span> 
+                 <i class="bi bi-star-fill" style="color:yellow;"></i>
+                 <i class="bi bi-star-fill" style="color:yellow;"></i>
+                 <i class="bi bi-star-fill" style="color:yellow;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <span> ({{$d->rating}})</span>
+              </div>
+
+              @elseif($d->rating == 4.0)
+              <div class="rate">
+                  <span>Rating:  </span> 
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:gray;"></i>
+                 <span> ({{$d->rating}})</span>
+              </div>
+
+              @elseif($d->rating == 5.0)
+              <div class="rate">
+                  <span>Rating:  </span> 
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <i class="bi bi-star-fill" style="color:yellow"></i>
+                 <span> ({{$d->rating}})</span>
+              </div>
+              @endif
+            @endforeach
              
               <div class="info">
                 <span class="text">Speciality In: {{$d->speciality}}</span>
@@ -397,6 +465,12 @@
 
 
             </div>
+
+            <div class="info">
+              <span class="text">BMDC Number: {{$d->bmdc}}</span>
+            
+
+          </div>
           
 
             <div class="info">

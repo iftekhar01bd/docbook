@@ -26,6 +26,7 @@
             $("#gender").show();
             $("#age").show();
             $("#special").show();
+            $('#bmdc').show();
 
         }else if(user == "patient"){
             $("#blood").show();
@@ -40,6 +41,8 @@
             $("#gender").show();
             $("#age").show();
             $("#special").hide();
+            $('#bmdc').hide();
+
 
         }else if(user == "specialist"){
             $("#blood").hide();
@@ -54,6 +57,8 @@
             $("#gender").show();
             $("#age").show();
             $("#special").show();
+            $('#bmdc').show();
+
 
 
         }else if(user == "admin"){
@@ -70,6 +75,7 @@
             $("#gender").hide();
             $("#blood").hide();
             $("#special").hide();
+            $('#bmdc').hide();
 
 
         }
@@ -91,6 +97,8 @@
             $("#gender").show();
             $("#age").show();
             $("#special").show();
+            $('#bmdc').show();
+
 
         }else if(user == "patient"){
             $("#blood").show();
@@ -105,6 +113,7 @@
             $("#gender").show();
             $("#age").show();
             $("#special").hide();
+            $('#bmdc').hide();
 
 
         }else if(user == "specialist"){
@@ -119,6 +128,8 @@
             $("#name").show();
             $("#gender").show();
             $("#age").show();
+            $('#bmdc').show();
+
 
         }else if(user == "admin"){
             $("#email").show();
@@ -134,6 +145,7 @@
             $("#gender").hide();
             $("#blood").hide();
             $("#special").hide();
+            $('#bmdc').hide();
 
 
         }
@@ -183,8 +195,8 @@
       <input type="text" id="medcollege" class="fadeIn third" name="medcollege" placeholder="">
       <label>Graduation Year: </label>
       <input type="number" id="gradyear" class="fadeIn third" name="gradyear" placeholder="">
-      <label>Medical License Number: </label>
-      <input type="text" id="licenseno" class="fadeIn third" name="licenseno" placeholder="">
+      <label>BMDC Number: </label>
+      <input type="text" id="bmdc" class="fadeIn third" name="bmdc" placeholder="">
       <label>Experience: </label>
       <input type="number" id="experience" class="fadeIn third" name="experience" placeholder="">
       <label>Degree Acomplishments: </label>
