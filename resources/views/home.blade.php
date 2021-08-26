@@ -327,7 +327,32 @@
   
 
 <div class="container">
-  <h2>Doctors Blog Feed Here</h2>
+ 
+  @foreach($blogs as $b)
+
+    <div class="card">
+   
+      <h5 class="card-header">Blog Form : </h5>
+      <div class="card-body">
+
+       <form action="" method="">
+           <h4>Created At:  {{\Carbon\Carbon::parse($b->created_at)->toDayDateTimeString()}}</h4>
+           <label>Doctor Email: </label>{{$b->doctor_email}} <br>
+           <label for="title">Blog Title: </label><p>{{$b->title}}</p> <br>
+           <label for="content" style="display: flex; align-items: center;">Blog Content: </label><textarea rows="30" cols="100" id="content" name='content'>{{$b->content}}</textarea>
+
+           <br><br>
+
+       </form>
+     
+       
+     </div>
+</div>
+<br>
+
+  @endforeach
+
+  
 </div>
 
 

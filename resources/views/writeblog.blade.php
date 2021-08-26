@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocBook : Doctor Homepage</title>
 <!--    ------css link---------->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 <!--    -------font awesome kit link------->
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
 
@@ -77,48 +77,9 @@
         
         
        
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Notifications
-          </a>
-
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
        
-           
-              @forelse ($users->notifications as $notification)
-              @if($notification->data['category'] != "FOLLOW UP")
-              <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
-              @endif
-              @empty
-              <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
-             
-              @endforelse
-            
-           
-          </ul>
-        </li>
           
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Follow Up Notifications
-          </a>
-
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
        
-           
-              @forelse ($users->notifications as $notification)
-              @if($notification->data['category'] == "FOLLOW UP")
-              <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
-              @endif
-              
-              @empty
-              <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
-             
-              @endforelse
-            
-           
-          </ul>
-        </li>
          <!-- 
           <li>
 
@@ -148,7 +109,7 @@
               <div class="profile-photo">
                 
             @foreach($doc_info as $i)
-            <a href="#"><img width='100px' height='80px' src={{ $i->propic }} alt="profile pic"></a>
+            <a href="#"><img width='100px' height='80px' src='/{{ $i->propic }}'' alt="profile pic"></a>
             @endforeach
              
             
@@ -374,65 +335,28 @@
               </div>
               
         
-   
-  
-@foreach($post_info as $i)
 <div class="card">
-    @if($i->post_type == "Post With Name")
-    <?php $email = $i->patient_email; ?>
-    @foreach($patient_info as $p)
-       @if($p->email == $email)
-       <h5 class="card-header">Name: {{$p->fname.' '.$p->lname}}, User {{$p->userid}}</h5>
-       <h7 class="card-header">Date and Time: {{\Carbon\Carbon::parse($i->created_at)->toDayDateTimeString()}}</h7>
-       <h7 class="card-header">Gender: {{$p->gender}}</h7>
+   
+       <h5 class="card-header">Blog Form : </h5>
        <div class="card-body">
-        <h5 class="card-title">Category: {{$i->problem_type}}</h5>
-        <p class="card-text ellipsis">{{$i->details}}</p>
-        <a href="home/viewpost/{{$i->id}}" class="btn btn-primary">View Post</a>
-         <br><br>
+    
+        <form action="post_blog" method="post">
+            {{ csrf_field() }}
+            <label for="title">Blog Title: </label><input size="50" id="title" name='title'/><br><br>
+            <label for="content" style="display: flex; align-items: center;">Blog Content: </label><textarea rows="30" cols="100" id="content" name='content'></textarea>
+
+            <br><br>    
+
+            <input class="btn btn-primary" type="submit" value="Post Blog"/>
+
+        </form>
+      
+        
       </div>
 </div>
 <br>
-       @endif
-       
-    @endforeach
+ 
     
-    @else
-    <?php $email = $i->patient_email; ?>
-    @foreach($patient_info as $p)
-       @if($p->email == $email)
-       <h5 class="card-header">User {{$p->userid}}</h5>
-       <h7 class="card-header">Date and Time: {{\Carbon\Carbon::parse($i->created_at)->toDayDateTimeString()}}</h7>    
-        <h7 class="card-header">Gender: {{$p->gender}}</h7>
-        <div class="card-body">
-        <h5 class="card-title">Category: {{$i->problem_type}}</h5>
-        <p class="card-text ellipsis">{{$i->details}}</p>
-        <a href="home/viewpost/{{$i->id}}" class="btn btn-primary">View Post</a>
-        <br><br>
-      </div>
-    </div>
-    <br>
-
-       @endif
-       
-    @endforeach
-    @endif
-@endforeach
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!--------section-5-footer----->
 <div class="container-fluid p-0">
@@ -483,7 +407,7 @@
 
 
 <!-----------bootstrap js link------------->
-<script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('/js/bootstrap.min.js') }}"></script>
 
 </body>
 @endif

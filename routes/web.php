@@ -12,10 +12,14 @@ use App\Http\Controllers\PostPrescription;
 use App\Http\Controllers\RecommendDoctor;
 use App\Models\Prescription;
 use App\Http\Controllers\RateController;
+use App\Http\Controllers\BlogController;
+use App\Models\Blog;
+
 use App\Models\Doctor;
 
 Route::post('user', [UserAuth::class, 'userLogin']);
 Route::post('reg', [UserAuth::class, 'userRegister']);
+Route::post('home/post_blog', [BlogController::class, 'store']);
 Route::post('home/post_issue', [PostController::class, 'post']);
 
 Route::view('home', 'home');
@@ -44,8 +48,9 @@ Route::get('/home', function () {
         $se = session('patient');
         $info = DB::select("select * from patients where email='$se'");
         //echo $info;
+        $blogs = Blog::all();
 
-        return view('home', ['info' => $info]);
+        return view('home', ['info' => $info, 'blogs' => $blogs]);
     } else if(session()->has('specialist')){
         $se = session('specialist');
         $info = DB::select("select * from specialist_doctors where email='$se'");
@@ -220,4 +225,11 @@ Route::get('home/view_doctors/{id}', function($id){
 
 Route::get('home/view_doctors/rate/{patientid}/{doctorid}/{rate}', [RateController::class, 'rate']);
 
+Route::get('home/blog', function(){
+    $se = session('doctor');
+    $info = DB::select("select * from patients where email='$se'");
+    $docs = DB::select("select * from doctors");
+
+    return view("writeblog", ['doc_info' => $docs, 'info' => $info, 'docs' => $docs, 'doctor_email' => $se]);
+})->name('blog');
 
