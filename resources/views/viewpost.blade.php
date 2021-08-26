@@ -317,6 +317,11 @@
                   </div>
                  </div>
               </div>
+
+
+@if(session()->has('msg'))
+<h4 style="color: green">{{ session()->get('msg')}}</h4>
+@endif
               
         
    

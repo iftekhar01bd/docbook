@@ -568,10 +568,10 @@
 
                         $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
                         //alert(data);
-                        if(data >= 3){
+                       
                           //alert(data);
                           window.location.href = "{{ url('/doctorhome') }}";
-                        }
+                        
                     }
                 }  
            });  

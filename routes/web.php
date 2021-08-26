@@ -10,6 +10,7 @@ use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\PostPrescription;
 use App\Http\Controllers\RecommendDoctor;
+use App\Models\Prescription;
 use App\Http\Controllers\RateController;
 use App\Models\Doctor;
 
@@ -140,8 +141,8 @@ Route::get('/home/viewpost/give/{id}', function($id){
     $se = session('doctor');
     $post_info = DB::select("select * from med_posts where id='$id'");
     $post_info = $post_info[0];
-        $doc_info = DB::select("select * from doctors where email='$se'");
-        $patient_info = DB::select("select * from patients");
+    $doc_info = DB::select("select * from doctors where email='$se'");
+    $patient_info = DB::select("select * from patients");
         
     $pdf = DB::select("select pdf from med_posts where id='$id'");
    
@@ -152,6 +153,24 @@ Route::get('/home/viewpost/give/{id}', function($id){
 
     
     $patient_detail = DB::select("select * from patients where email='$e'");
+
+    
+    $pres = Prescription::all();
+    $count = 0;
+    foreach($pres as $p){
+        if($p->post_id == $post_info->id and $p->doctor_email == $se){
+            $count += 1;
+        }
+    }
+
+    //echo $count;
+
+    if($count >= 1){
+        //return "<script>alert('You already gave presciption sir! :3');</script>";
+
+        return redirect("/home/viewpost/".$id)->with('msg', "Prescription already given...");
+    }
+
 
     return view('prescription',  ['images' => $images, 'pat_email'=>$e, 'patient_detail' => $patient_detail, 'pdf' => $pdf, 'id' => $id, 'post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
  

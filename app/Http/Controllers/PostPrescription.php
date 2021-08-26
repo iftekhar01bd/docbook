@@ -231,6 +231,7 @@ class PostPrescription extends Controller
          
   
           Prescription::insert([
+               'post_id' => $request->post_id,
               'doctor_email' => session('doctor'),
               'patient_email' => $request->pat_email,
               'information' => $output,
