@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocBook : Patient Homepage</title>
+    <title>DocBook : Doctor Homepage</title>
 <!--    ------css link---------->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 <!--    -------font awesome kit link------->
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
+
     
     
     
     
 </head>
 
-@if(Session::has('patient'))
+@if(Session::has('doctor'))
 <body>
 <!---------section-1---------->
 <!------top-heading------>
@@ -25,7 +26,7 @@
             <div class="row justify-content-end align-items-center">
             
             <div class="col-md-6 offset-3">
-                <p style="margin: 0px;">Patient's Page</p>
+                <p style="margin: 0px;">Doctor's Page</p>
             </div>
             
             
@@ -64,23 +65,68 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ route('view_prescriptions') }}">View Prescriptions</a>
-        </li>
-        
         
         
         <li class="nav-item">
           <a class="nav-link" href="#">News Feed</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('view_profile') }}">Doctors</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
+          <a class="nav-link" href="{{ route('blog') }}">Write Blog</a>
         </li>
         
+        
+       
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Notifications
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+       
+           
+              @forelse ($users->notifications as $notification)
+              @if($notification->data['category'] != "FOLLOW UP")
+              <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+              @endif
+              @empty
+              <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+             
+              @endforelse
+            
+           
+          </ul>
+        </li>
+          
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Follow Up Notifications
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+       
+           
+              @forelse ($users->notifications as $notification)
+              @if($notification->data['category'] == "FOLLOW UP")
+              <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+              @endif
+              
+              @empty
+              <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+             
+              @endforelse
+            
+           
+          </ul>
+        </li>
+         <!-- 
+          <li>
+
+          <a class="nav-link" href="">View Prescribed Posts</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('followups') }}">Follow Ups</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
         </li>
@@ -94,14 +140,14 @@
                   <div class="name">
                   <a href="#">
                    
-                    <p>{{session('patient')}}</p>
+                    <p>{{session('doctor')}}</p>
                 
                   </a>
             </div>
   
               <div class="profile-photo">
                 
-            @foreach($info as $i)
+            @foreach($doc_info as $i)
             <a href="#"><img width='100px' height='80px' src={{ $i->propic }} alt="profile pic"></a>
             @endforeach
              
@@ -329,36 +375,35 @@
               
         
    
-  
-
-<div class="container">
+              <div class="container">
  
-  @foreach($blogs as $b)
-
-    <div class="card">
-   
-      <h5 class="card-header">Blog Form : </h5>
-      <div class="card-body">
-
-       <form action="" method="">
-           <h4>Created At:  {{\Carbon\Carbon::parse($b->created_at)->toDayDateTimeString()}}</h4>
-           <label>Doctor Email: </label>{{$b->doctor_email}} <br>
-           <label for="title">Blog Title: </label><p>{{$b->title}}</p> <br>
-           <label for="content" style="display: flex; align-items: center;">Blog Content: </label><textarea rows="30" cols="100" id="content" name='content'>{{$b->content}}</textarea>
-
-           <br><br>
-
-       </form>
-     
-       
-     </div>
-</div>
-<br>
-
-  @endforeach
-
-  
-</div>
+                @foreach($blogs as $b)
+              
+                  <div class="card">
+                 
+                    <h5 class="card-header">Blog Form : </h5>
+                    <div class="card-body">
+              
+                     <form action="" method="">
+                         <h4>Created At:  {{\Carbon\Carbon::parse($b->created_at)->toDayDateTimeString()}}</h4>
+                         <label>Doctor Email: </label>{{$b->doctor_email}} <br>
+                         <label for="title">Blog Title: </label><p>{{$b->title}}</p> <br>
+                         <label for="content" style="display: flex; align-items: center;">Blog Content: </label><textarea rows="30" cols="100" id="content" name='content'>{{$b->content}}</textarea>
+              
+                         <br><br>
+              
+                     </form>
+                   
+                     
+                   </div>
+              </div>
+              <br>
+              
+                @endforeach
+              
+                
+              </div>
+              
 
 
 
@@ -423,23 +468,8 @@
 
 
 <!-----------bootstrap js link------------->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('/js/bootstrap.min.js') }}"></script>
 
 </body>
-
-@elseif(Session::has('doctor'))
-<h2>Doctor page</h2>  </div>
-<a href="/logout">Log Out </a>
-</div>
-@elseif(Session::has('specialist'))
-<h2>Specialist page</h2>  </div>
-<a href="/logout">Log Out </a>
-</div>
-@elseif(Session::has('admin'))
-<h2>Admin page</h2>  </div>
-<a href="/logout">Log Out </a>
-</div>
-@else
-
 @endif
 </html>

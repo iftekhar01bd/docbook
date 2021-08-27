@@ -48,7 +48,7 @@ Route::get('/home', function () {
         $se = session('patient');
         $info = DB::select("select * from patients where email='$se'");
         //echo $info;
-        $blogs = Blog::all();
+        $blogs = Blog::all()->sortByDesc('created_at');
 
         return view('home', ['info' => $info, 'blogs' => $blogs]);
     } else if(session()->has('specialist')){
@@ -232,4 +232,228 @@ Route::get('home/blog', function(){
 
     return view("writeblog", ['doc_info' => $docs, 'info' => $info, 'docs' => $docs, 'doctor_email' => $se]);
 })->name('blog');
+
+
+Route::get('home/viewblog', function(){
+    $se = session('doctor');
+        $post_info = DB::select("select * from med_posts order by id desc");
+        
+        $doc_info = DB::select("select * from doctors where email='$se'");
+        $patient_info = DB::select("select * from patients");
+        $user_id = Doctor::where('email', $se)->first()->id;
+        $users = Doctor::find($user_id);
+        $blogs = Blog::all()->sortByDesc('created_at');
+
+
+        return view('viewblog_doc', ['blogs' => $blogs, 'viewblog_doc', 'users' => $users, 'post_info' => $post_info, 'doc_info'=>$doc_info, 'patient_info' => $patient_info]);
+
+    
+})->name('view_blog');
+
+Route::get('home/view_prescriptions', function(){
+    $se = session('patient');
+    
+
+    $post_info = DB::select("select * from med_posts where patient_email='$se'");
+
+      
+    $patient_info = DB::select("select * from patients where email='$se'");
+
+    return view('view_prescriptions',  ['post_info' => $post_info, 'patient_info' => $patient_info]);
+    
+})->name('view_prescriptions');
+
+
+/*
+SMART ATTESTATION 
+*/
+
+function docbook_prescription_comparison($DoctorI, $DoctorJ)
+{
+	$DoctorI_len = strlen($DoctorI);
+	$DoctorJ_len = strlen($DoctorJ);
+	
+	$distance = (int) floor ((max($DoctorI_len,$DoctorJ_len))/2)-1;
+	$commons1 = commonCharacters( $DoctorI, $DoctorJ, $distance );
+	$commons2 = commonCharacters( $DoctorJ, $DoctorI, $distance );
+	
+	if( ($commons1_len = strlen( $commons1 )) == 0) return 0;
+	if( ($commons2_len = strlen( $commons2 )) == 0) return 0;
+
+	// calculate transpositions
+	$transpositions = 0;
+	$upperBound = min( $commons1_len, $commons2_len );
+
+	for( $i = 0; $i < $upperBound; $i++)
+	{
+		if( $commons1[$i] != $commons2[$i] ) 
+		$transpositions++;
+	}
+	$transpositions /= 2.0;
+
+
+	// return the docbook_prescription_comparison distance
+	return (($upperBound/($DoctorI_len) + $upperBound/($DoctorJ_len) + ($upperBound - $transpositions)/($commons1_len)) / 3.0);
+}
+
+function commonCharacters( $DoctorI, $DoctorJ, $distance )
+{
+	$DoctorI_len = strlen($DoctorI);
+	$DoctorJ_len = strlen($DoctorJ);
+	$commonCharacters='';
+	$matching=0;
+  
+	for($i=0;$i<$DoctorI_len;$i++)
+	{
+		$noMatch = True;
+		for( $j= 0; $noMatch && $j < $DoctorJ_len ; $j++)
+		{
+			if(($DoctorJ[$j]==$DoctorI[$i]) && (abs($j-$i)<=$distance))
+			{
+				$noMatch = False;
+				$matching++;
+				$commonCharacters .= $DoctorI[$i];
+			}
+		}
+	}
+	return $commonCharacters;
+}
+
+function prefixLength( $DoctorI, $DoctorJ, $MINPREFIXLENGTH = 4 )
+{
+	$n = min( array( $MINPREFIXLENGTH, strlen($DoctorI), strlen($DoctorJ) ) );
+    for($i = 0; $i < $n; $i++)
+	{
+		if( $DoctorI[$i] != $DoctorJ[$i] )
+		{
+			return $i;
+		}
+	}
+	return $n;
+}
+
+function docbook_prescription_comparisonWinkler($DoctorI, $DoctorJ, $PREFIXSCALE, $threshold)
+{
+	$DoctorI = strtolower($DoctorI);
+	$DoctorJ = strtolower($DoctorJ);
+	$docbook_prescription_comparisonDistance = docbook_prescription_comparison( $DoctorI, $DoctorJ );
+	$prefixLength = prefixLength( $DoctorI, $DoctorJ );
+	$result = round(($docbook_prescription_comparisonDistance + ($prefixLength * $PREFIXSCALE * (1.0 - $docbook_prescription_comparisonDistance)))*100,2);
+	if ($result >= $threshold)
+		return $result." => High similarity level";
+	else
+    return $result." => Low similarity level";
+}
+
+Route::get('home/smart_attestation/{id}', function($id){
+    $se = session('patient');
+    $patient_info = DB::select("select * from patients where email='$se'");
+
+    $post_info = DB::select("select * from med_posts where id='$id'");
+
+      
+    $prescriptions = DB::select("select * from prescriptions where post_id='$id'");
+    
+    $pres = [];
+    
+    $index = 0;
+    foreach($prescriptions as $p){
+        array_push($pres, $p->information);
+    }
+    
+    $p1=$pres[0]; $p2=$pres[1]; $p3=$pres[2];
+
+    $string = [];
+
+    $p1 = explode('#', $p1);
+    $index = 0;
+    foreach($p1 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+
+    $string = implode(' ', $string);
+
+
+    $string2 =[];
+    $p2 = explode('#', $p2);
+    $index = 0;
+    foreach($p2 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string2, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string2, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+
+    $string2 = implode(' ', $string2);
+
+    
+    $string3 = [];
+    $p3 = explode('#', $p3);
+    $index = 0;
+    foreach($p3 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string3, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string3, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+
+    $string3 = implode(' ', $string3);
+
+    $p1_p2 = docbook_prescription_comparisonWinkler($string, $string2 , 0.1, 80);
+    $p1_p3 = docbook_prescription_comparisonWinkler($string, $string3 , 0.1, 80);
+    $p2_p3 = docbook_prescription_comparisonWinkler($string2, $string3, 0.1, 80);
+
+    $result = [];
+    array_push($result, "Prescription1 and Prescription2 => ".$p1_p2);
+    array_push($result, "Prescription1 and Prescription3 => ".$p1_p3);
+    array_push($result, "Prescription2 and Prescription3 => ".$p2_p3);
+
+    //echo $result;
+
+
+
+    
+   // echo $string;
+
+   // $string = "";
+
+    return view('smart_attestation',  ['patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
+    
+})->name('smart_attestation');
 

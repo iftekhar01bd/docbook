@@ -70,7 +70,9 @@
         <li class="nav-item">
           <a class="nav-link" href="#">News Feed</a>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('view_blog') }}">View Blogs</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('blog') }}">Write Blog</a>
         </li>
