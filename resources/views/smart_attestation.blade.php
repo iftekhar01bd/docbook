@@ -326,7 +326,7 @@
               @foreach($post_info as $i)
               <div class="card">
                 @foreach($string as $s)
-                    {{$s}} <br/>
+                   <h3> {{$s}} <br/> </h3>
 
                 @endforeach
                 

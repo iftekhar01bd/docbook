@@ -340,9 +340,9 @@ function docbook_prescription_comparisonWinkler($DoctorI, $DoctorJ, $PREFIXSCALE
 	$prefixLength = prefixLength( $DoctorI, $DoctorJ );
 	$result = round(($docbook_prescription_comparisonDistance + ($prefixLength * $PREFIXSCALE * (1.0 - $docbook_prescription_comparisonDistance)))*100,2);
 	if ($result >= $threshold)
-		return $result." => High similarity level";
+		return $result;
 	else
-    return $result." => Low similarity level";
+    return $result;
 }
 
 Route::get('home/smart_attestation/{id}', function($id){
@@ -355,10 +355,13 @@ Route::get('home/smart_attestation/{id}', function($id){
     $prescriptions = DB::select("select * from prescriptions where post_id='$id'");
     
     $pres = [];
+    $pres_ids = [];
     
     $index = 0;
     foreach($prescriptions as $p){
         array_push($pres, $p->information);
+        array_push($pres_ids, $p->id);
+
     }
     
     $p1=$pres[0]; $p2=$pres[1]; $p3=$pres[2];
@@ -386,7 +389,7 @@ Route::get('home/smart_attestation/{id}', function($id){
     }
 
     $string = implode(' ', $string);
-
+    //echo $string;
 
     $string2 =[];
     $p2 = explode('#', $p2);
@@ -408,9 +411,9 @@ Route::get('home/smart_attestation/{id}', function($id){
         }
         
     }
-
+   
     $string2 = implode(' ', $string2);
-
+    //echo $string2;
     
     $string3 = [];
     $p3 = explode('#', $p3);
@@ -435,14 +438,36 @@ Route::get('home/smart_attestation/{id}', function($id){
 
     $string3 = implode(' ', $string3);
 
+   // echo $string."<br>"; echo $string2."<br>"; echo $string3."<br>";
+
     $p1_p2 = docbook_prescription_comparisonWinkler($string, $string2 , 0.1, 80);
     $p1_p3 = docbook_prescription_comparisonWinkler($string, $string3 , 0.1, 80);
     $p2_p3 = docbook_prescription_comparisonWinkler($string2, $string3, 0.1, 80);
 
     $result = [];
-    array_push($result, "Prescription1 and Prescription2 => ".$p1_p2);
-    array_push($result, "Prescription1 and Prescription3 => ".$p1_p3);
-    array_push($result, "Prescription2 and Prescription3 => ".$p2_p3);
+
+    $choose = max($p1_p2, $p1_p3, $p2_p3);
+    $chosen_ids = [];
+    if($choose == $p1_p2){
+        array_push($chosen_ids, $pres_ids[0], $pres_ids[1]);
+
+    }else if($choose == $p1_p3){
+        array_push($chosen_ids, $pres_ids[0], $pres_ids[2]);
+    }else{
+        array_push($chosen_ids, $pres_ids[1], $pres_ids[2]);
+    }
+
+    echo "<br><br><br>";
+    echo "<h3>";
+    echo $string."<br>========"; 
+    echo $string2."<br>======="; 
+    echo $string3."<br>=======";
+    echo "</h3>";
+    array_push($result, "Prescription1 and Prescription2 => ".$p1_p2.'%');
+    array_push($result, "Prescription1 and Prescription3 => ".$p1_p3."%");
+    array_push($result, "Prescription2 and Prescription3 => ".$p2_p3.'%');
+    array_push($result, "Prescription chosen ::: ".implode(',', $chosen_ids));
+
 
     //echo $result;
 
