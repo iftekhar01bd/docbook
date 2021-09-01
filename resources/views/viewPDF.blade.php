@@ -20,7 +20,7 @@
 </head>
 <body>
     <div id="prescription">
-    @if($id2 == 1)
+    @if($id2 == $chosen_ids[0])
     <table>
         <thead> 
           <th> Medicine Name</th>
@@ -124,7 +124,7 @@
       Tips: {{end($detail1_t)[0]}}
       Advice: {{end($detail1_t)[1]}}
 
-      @elseif($id2 == 2)
+      @elseif($id2 == $chosen_ids[1])
       <table>
         <thead> 
           <th> Medicine Name</th>
@@ -229,7 +229,7 @@
       Advice: {{end($detail2_t)[1]}}
 
 
-      @elseif($id2 == 3)
+      @elseif($id2 == $chosen_ids[2])
       <table>
         <thead> 
           <th> Medicine Name</th>

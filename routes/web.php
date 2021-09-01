@@ -562,7 +562,10 @@ Route::get('home/smart_attestation/{id}', function($id){
     if(strpos($name, '|')){
         $name = explode('|', $name);
     }
-    $name = implode(' ', $name);
+    if(is_array($name)){
+        $name = implode(' ', $name);
+    }
+   
 
     $index = 0;
     foreach($p1 as $cols){
@@ -593,7 +596,10 @@ Route::get('home/smart_attestation/{id}', function($id){
     if(strpos($name2, '|')){
         $name2 = explode('|', $name2);
     }
-    $name2 = implode(' ', $name2);
+    if(is_array($name2)){
+        $name2 = implode(' ', $name2);
+    }
+    
 
     $index = 0;
     foreach($p2 as $cols){
@@ -624,7 +630,10 @@ Route::get('home/smart_attestation/{id}', function($id){
     if(strpos($name3, '|')){
         $name3 = explode('|', $name3);
     }
-    $name3 = implode(' ', $name3);
+    if(is_array($name3)){
+        $name3 = implode(' ', $name3);
+    }
+    
 
     $index = 0;
     foreach($p3 as $cols){
@@ -688,9 +697,9 @@ Route::get('home/smart_attestation/{id}', function($id){
     //echo $string2."<br>======="; 
     //echo $string3."<br>=======";
     //echo "</h3>";
-    array_push($result, "Prescription1 and Prescription2 => ".$p1_p2.'%');
-    array_push($result, "Prescription1 and Prescription3 => ".$p1_p3."%");
-    array_push($result, "Prescription2 and Prescription3 => ".$p2_p3.'%');
+    array_push($result, "Prescription".$pres_ids[0]." and Prescription".$pres_ids[1]."=> ".$p1_p2.'%');
+    array_push($result, "Prescription".$pres_ids[0]." and Prescription".$pres_ids[2]." => ".$p1_p3."%");
+    array_push($result, "Prescription".$pres_ids[1]." and Prescription".$pres_ids[2]." => ".$p2_p3.'%');
     array_push($result, "Prescription chosen ::: ".implode(',', $chosen_ids));
 
 
@@ -757,7 +766,10 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
     if(strpos($name, '|')){
         $name = explode('|', $name);
     }
-    $name = implode(' ', $name);
+    if(is_array($name)){
+        $name = implode(' ', $name);
+    }
+   
 
     $index = 0;
     foreach($p1 as $cols){
@@ -788,7 +800,10 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
     if(strpos($name2, '|')){
         $name2 = explode('|', $name2);
     }
-    $name2 = implode(' ', $name2);
+    if(is_array($name2)){
+        $name2 = implode(' ', $name2);
+    }
+    
 
     $index = 0;
     foreach($p2 as $cols){
@@ -819,7 +834,10 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
     if(strpos($name3, '|')){
         $name3 = explode('|', $name3);
     }
-    $name3 = implode(' ', $name3);
+    if(is_array($name3)){
+        $name3 = implode(' ', $name3);
+    }
+    
 
     $index = 0;
     foreach($p3 as $cols){
@@ -883,9 +901,9 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
     //echo $string2."<br>======="; 
     //echo $string3."<br>=======";
     //echo "</h3>";
-    array_push($result, "Prescription1 and Prescription2 => ".$p1_p2.'%');
-    array_push($result, "Prescription1 and Prescription3 => ".$p1_p3."%");
-    array_push($result, "Prescription2 and Prescription3 => ".$p2_p3.'%');
+    array_push($result, "Prescription".$pres_ids[0]." and Prescription".$pres_ids[1]."=> ".$p1_p2.'%');
+    array_push($result, "Prescription".$pres_ids[0]." and Prescription".$pres_ids[2]." => ".$p1_p3."%");
+    array_push($result, "Prescription".$pres_ids[1]." and Prescription".$pres_ids[2]." => ".$p2_p3.'%');
     array_push($result, "Prescription chosen ::: ".implode(',', $chosen_ids));
 
 
