@@ -662,7 +662,7 @@ Route::get('home/smart_attestation/{id}', function($id){
     $recommend_specialist = "";
    // echo $name;
    // echo $name2; echo $name3;
-    if($name_high < 80){
+    if($name_high < 95){
         $recommend_specialist = "YES";
     }else{
         $recommend_specialist = "NO";
@@ -857,7 +857,7 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
     $recommend_specialist = "";
    // echo $name;
    // echo $name2; echo $name3;
-    if($name_high < 80){
+    if($name_high < 95){
         $recommend_specialist = "YES";
     }else{
         $recommend_specialist = "NO";
