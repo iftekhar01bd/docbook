@@ -345,7 +345,178 @@ function docbook_prescription_comparisonWinkler($DoctorI, $DoctorJ, $PREFIXSCALE
     return $result;
 }
 
+function convertPrescription($no, $string){
+    $result = [];
+    $fields = explode('#', $string);
+    $names = []; $times = []; $days = []; $amount = []; $descriptions = []; 
+    $names_t = []; $times_t = []; $hospitals = [];
+   
+    for($i = 0; $i < count($fields); $i++){
+        if($i == 0){
+            $names = $fields[0];
+            if(strpos($names, '|')){
+                $names = explode('|', $names);
+    
+            }
+        }else if($i == 1){
+            $times = $fields[1];
+            if(strpos($times, '|')){
+                $times = explode('|', $times);
+    
+            }
+        }else if($i == 2){
+            $days = $fields[2];
+            if(strpos($days, '|')){
+                $days = explode('|', $days);
+    
+            }
+        }else if($i == 3){
+            $amount = $fields[3];
+            if(strpos($amount, '|')){
+                $amount = explode('|', $amount);
+    
+            }
+        }else if($i == 4){
+            $descriptions = $fields[4];
+            if(strpos($descriptions, '|')){
+                $descriptions = explode('|', $descriptions);
+    
+            }
+        }else if($i == 5){
+            $names_t = $fields[5];
+            if(strpos($names_t, '|')){
+                $names_t = explode('|', $names_t);
+    
+            }
+
+
+
+        }
+        else if($i == 6){
+            $times_t = $fields[6];
+            if(strpos($times_t, '|')){
+                $times_t = explode('|', $times_t);
+    
+            }
+
+
+
+        }else if($i == 7){
+            $hospitals = $fields[7];
+            if(strpos($hospitals, '|')){
+                $hospitals = explode('|', $hospitals);
+    
+            }
+
+
+
+        }
+
+      
+       
+
+    }
+
+    
+    if(is_array($names)){
+        for($i = 0; $i < count($names); $i++){
+            array_push($result, [$names[$i], $times[$i], $days[$i], $amount[$i], $descriptions[$i]]);
+        }
+    }else{
+        array_push($result, [$names, $times, $days, $amount, $descriptions]);
+
+    }
+
+   
+    
+
+   
+
+   // echo json_encode($result);
+
+
+
+
+    
+   
+    return $result;
+    
+    
+
+}
+
+function convertPrescription_t($no, $string){
+    $result = [];
+    $fields = explode('#', $string);
+    $names = []; $times = []; $days = []; $amount = []; $descriptions = []; 
+    $names_t = []; $times_t = []; $hospitals = [];
+   
+    for($i = 0; $i < count($fields); $i++){
+        
+        if($i == 5){
+            $names_t = $fields[5];
+            if(strpos($names_t, '|')){
+                $names_t = explode('|', $names_t);
+    
+            }
+
+
+
+        }
+        else if($i == 6){
+            $times_t = $fields[6];
+            if(strpos($times_t, '|')){
+                $times_t = explode('|', $times_t);
+    
+            }
+
+
+
+        }else if($i == 7){
+            $hospitals = $fields[7];
+            if(strpos($hospitals, '|')){
+                $hospitals = explode('|', $hospitals);
+    
+            }
+
+
+
+        }
+
+      
+       
+
+    }
+
+    
+    
+
+    if(is_array($names_t)){
+        for($i = 0; $i < count($names_t); $i++){
+            array_push($result, [$names_t[$i], $times_t[$i], $hospitals[$i]]);
+        }
+    }else{
+        array_push($result, [$names_t, $times_t, $hospitals]);
+
+    }
+    
+
+    array_push($result, [$fields[8], $fields[9]]);
+
+   // echo json_encode($result);
+
+
+
+
+    
+   
+    return $result;
+    
+    
+
+}
 Route::get('home/smart_attestation/{id}', function($id){
+    $id_p = $id;
     $se = session('patient');
     $patient_info = DB::select("select * from patients where email='$se'");
 
@@ -365,6 +536,23 @@ Route::get('home/smart_attestation/{id}', function($id){
     }
     
     $p1=$pres[0]; $p2=$pres[1]; $p3=$pres[2];
+
+    
+
+    $detail1 = convertPrescription("1", $p1); $detail2 = convertPrescription("2", $p2); $detail3 = convertPrescription("3", $p3);
+   
+    $detail1_t = convertPrescription_t("1", $p1);
+    $detail2_t = convertPrescription_t("2", $p2);
+    $detail3_t = convertPrescription_t("3", $p3);
+
+   //print_r($detail1);
+  // print_r($detail2);
+
+//print_r($detail3);
+
+
+
+    
 
     $string = [];
     $name = [];
@@ -472,9 +660,9 @@ Route::get('home/smart_attestation/{id}', function($id){
 
     $name_high = max($name1_2, $name1_3, $name2_3);
     $recommend_specialist = "";
-    echo $name;
-    echo $name2; echo $name3;
-    if($name_high < 95){
+   // echo $name;
+   // echo $name2; echo $name3;
+    if($name_high < 80){
         $recommend_specialist = "YES";
     }else{
         $recommend_specialist = "NO";
@@ -494,12 +682,12 @@ Route::get('home/smart_attestation/{id}', function($id){
         array_push($chosen_ids, $pres_ids[1], $pres_ids[2]);
     }
 
-    echo "<br><br><br>";
-    echo "<h3>";
-    echo $string."<br>========"; 
-    echo $string2."<br>======="; 
-    echo $string3."<br>=======";
-    echo "</h3>";
+    //echo "<br><br><br>";
+    //echo "<h3>";
+    //echo $string."<br>========"; 
+    //echo $string2."<br>======="; 
+    //echo $string3."<br>=======";
+    //echo "</h3>";
     array_push($result, "Prescription1 and Prescription2 => ".$p1_p2.'%');
     array_push($result, "Prescription1 and Prescription3 => ".$p1_p3."%");
     array_push($result, "Prescription2 and Prescription3 => ".$p2_p3.'%');
@@ -517,7 +705,202 @@ Route::get('home/smart_attestation/{id}', function($id){
 
    // $string = "";
 
-    return view('smart_attestation',  ['recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
+    return view('smart_attestation',  ['id_p' => $id_p, 'chosen_ids' => $chosen_ids, 'detail1_t' => $detail1_t, 'detail2_t' => $detail2_t, 'detail3_t' => $detail3_t, 'detail1' => $detail1, 'detail2' => $detail2, 'detail3' => $detail3, 'recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
     
 })->name('smart_attestation');
+
+
+
+Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
+    $se = session('patient');
+    $patient_info = DB::select("select * from patients where email='$se'");
+
+    $post_info = DB::select("select * from med_posts where id='$id'");
+
+      
+    $prescriptions = DB::select("select * from prescriptions where post_id='$id'");
+    
+    $pres = [];
+    $pres_ids = [];
+    
+    $index = 0;
+    foreach($prescriptions as $p){
+        array_push($pres, $p->information);
+        array_push($pres_ids, $p->id);
+
+    }
+    
+    $p1=$pres[0]; $p2=$pres[1]; $p3=$pres[2];
+
+    
+
+    $detail1 = convertPrescription("1", $p1); $detail2 = convertPrescription("2", $p2); $detail3 = convertPrescription("3", $p3);
+   
+    $detail1_t = convertPrescription_t("1", $p1);
+    $detail2_t = convertPrescription_t("2", $p2);
+    $detail3_t = convertPrescription_t("3", $p3);
+
+   //print_r($detail1);
+  // print_r($detail2);
+
+//print_r($detail3);
+
+
+
+    
+
+    $string = [];
+    $name = [];
+
+    $p1 = explode('#', $p1);
+    $name = $p1[0];
+    if(strpos($name, '|')){
+        $name = explode('|', $name);
+    }
+    $name = implode(' ', $name);
+
+    $index = 0;
+    foreach($p1 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+
+    $string = implode(' ', $string);
+    //echo $string;
+
+    $string2 =[];
+    $name2 = [];
+    $p2 = explode('#', $p2);
+    $name2 = $p2[0];
+    if(strpos($name2, '|')){
+        $name2 = explode('|', $name2);
+    }
+    $name2 = implode(' ', $name2);
+
+    $index = 0;
+    foreach($p2 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string2, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string2, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+   
+    $string2 = implode(' ', $string2);
+    //echo $string2;
+    
+    $string3 = [];
+    $name3 = [];
+    $p3 = explode('#', $p3);
+    $name3 = $p3[0];
+    if(strpos($name3, '|')){
+        $name3 = explode('|', $name3);
+    }
+    $name3 = implode(' ', $name3);
+
+    $index = 0;
+    foreach($p3 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string3, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string3, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+
+    $string3 = implode(' ', $string3);
+
+   // echo $string."<br>"; echo $string2."<br>"; echo $string3."<br>";
+
+    $p1_p2 = docbook_prescription_comparisonWinkler($string, $string2 , 0.1, 80);
+    $name1_2 = docbook_prescription_comparisonWinkler($name, $name2 , 0.1, 80);
+
+    $p1_p3 = docbook_prescription_comparisonWinkler($string, $string3 , 0.1, 80);
+    $name1_3 = docbook_prescription_comparisonWinkler($name, $name3 , 0.1, 80);
+
+    $p2_p3 = docbook_prescription_comparisonWinkler($string2, $string3, 0.1, 80);
+    $name2_3 = docbook_prescription_comparisonWinkler($name2, $name3 , 0.1, 80);
+
+    $name_high = max($name1_2, $name1_3, $name2_3);
+    $recommend_specialist = "";
+   // echo $name;
+   // echo $name2; echo $name3;
+    if($name_high < 80){
+        $recommend_specialist = "YES";
+    }else{
+        $recommend_specialist = "NO";
+    }
+
+
+    $result = [];
+
+    $choose = max($p1_p2, $p1_p3, $p2_p3);
+    $chosen_ids = [];
+    if($choose == $p1_p2){
+        array_push($chosen_ids, $pres_ids[0], $pres_ids[1]);
+
+    }else if($choose == $p1_p3){
+        array_push($chosen_ids, $pres_ids[0], $pres_ids[2]);
+    }else{
+        array_push($chosen_ids, $pres_ids[1], $pres_ids[2]);
+    }
+
+    //echo "<br><br><br>";
+    //echo "<h3>";
+    //echo $string."<br>========"; 
+    //echo $string2."<br>======="; 
+    //echo $string3."<br>=======";
+    //echo "</h3>";
+    array_push($result, "Prescription1 and Prescription2 => ".$p1_p2.'%');
+    array_push($result, "Prescription1 and Prescription3 => ".$p1_p3."%");
+    array_push($result, "Prescription2 and Prescription3 => ".$p2_p3.'%');
+    array_push($result, "Prescription chosen ::: ".implode(',', $chosen_ids));
+
+
+
+
+    //echo $result;
+
+
+
+    
+   // echo $string;
+
+   // $string = "";
+
+    return view('viewPDF',  ['id2' => $id2, 'chosen_ids' => $chosen_ids, 'detail1_t' => $detail1_t, 'detail2_t' => $detail2_t, 'detail3_t' => $detail3_t, 'detail1' => $detail1, 'detail2' => $detail2, 'detail3' => $detail3, 'recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
+    
+})->name('viewPDF');
 

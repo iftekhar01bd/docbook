@@ -329,16 +329,12 @@
                  <h3> Recommend Specialist</h3>
                 @else
                 @foreach($string as $s)
-                <h3> {{$s}} <br/> </h3>
-
+                <h4>{{$s}}</h4>
+                @endforeach
+                @foreach($chosen_ids as $id)
+                <a class="btn btn-primary" href="/home/viewPDF/{{$id_p}}/{{$id}}">View Prescription {{$id}} </a>
                 @endforeach
                 @endif
-
-               
-                
-               
-              </div>
-              <br>
                    
                      
                 
