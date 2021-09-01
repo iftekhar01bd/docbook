@@ -367,8 +367,15 @@ Route::get('home/smart_attestation/{id}', function($id){
     $p1=$pres[0]; $p2=$pres[1]; $p3=$pres[2];
 
     $string = [];
+    $name = [];
 
     $p1 = explode('#', $p1);
+    $name = $p1[0];
+    if(strpos($name, '|')){
+        $name = explode('|', $name);
+    }
+    $name = implode(' ', $name);
+
     $index = 0;
     foreach($p1 as $cols){
         if($index <= 4){
@@ -392,7 +399,14 @@ Route::get('home/smart_attestation/{id}', function($id){
     //echo $string;
 
     $string2 =[];
+    $name2 = [];
     $p2 = explode('#', $p2);
+    $name2 = $p2[0];
+    if(strpos($name2, '|')){
+        $name2 = explode('|', $name2);
+    }
+    $name2 = implode(' ', $name2);
+
     $index = 0;
     foreach($p2 as $cols){
         if($index <= 4){
@@ -416,7 +430,14 @@ Route::get('home/smart_attestation/{id}', function($id){
     //echo $string2;
     
     $string3 = [];
+    $name3 = [];
     $p3 = explode('#', $p3);
+    $name3 = $p3[0];
+    if(strpos($name3, '|')){
+        $name3 = explode('|', $name3);
+    }
+    $name3 = implode(' ', $name3);
+
     $index = 0;
     foreach($p3 as $cols){
         if($index <= 4){
@@ -441,8 +462,24 @@ Route::get('home/smart_attestation/{id}', function($id){
    // echo $string."<br>"; echo $string2."<br>"; echo $string3."<br>";
 
     $p1_p2 = docbook_prescription_comparisonWinkler($string, $string2 , 0.1, 80);
+    $name1_2 = docbook_prescription_comparisonWinkler($name, $name2 , 0.1, 80);
+
     $p1_p3 = docbook_prescription_comparisonWinkler($string, $string3 , 0.1, 80);
+    $name1_3 = docbook_prescription_comparisonWinkler($name, $name3 , 0.1, 80);
+
     $p2_p3 = docbook_prescription_comparisonWinkler($string2, $string3, 0.1, 80);
+    $name2_3 = docbook_prescription_comparisonWinkler($name2, $name3 , 0.1, 80);
+
+    $name_high = max($name1_2, $name1_3, $name2_3);
+    $recommend_specialist = "";
+    echo $name;
+    echo $name2; echo $name3;
+    if($name_high < 95){
+        $recommend_specialist = "YES";
+    }else{
+        $recommend_specialist = "NO";
+    }
+
 
     $result = [];
 
@@ -469,6 +506,8 @@ Route::get('home/smart_attestation/{id}', function($id){
     array_push($result, "Prescription chosen ::: ".implode(',', $chosen_ids));
 
 
+
+
     //echo $result;
 
 
@@ -478,7 +517,7 @@ Route::get('home/smart_attestation/{id}', function($id){
 
    // $string = "";
 
-    return view('smart_attestation',  ['patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
+    return view('smart_attestation',  ['recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
     
 })->name('smart_attestation');
 

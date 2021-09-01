@@ -325,10 +325,16 @@
         
               @foreach($post_info as $i)
               <div class="card">
+                @if($recommend == "YES")
+                 <h3> Recommend Specialist</h3>
+                @else
                 @foreach($string as $s)
-                   <h3> {{$s}} <br/> </h3>
+                <h3> {{$s}} <br/> </h3>
 
                 @endforeach
+                @endif
+
+               
                 
                
               </div>
