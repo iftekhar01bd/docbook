@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 <!--    -------font awesome kit link------->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
 
     
@@ -335,28 +337,18 @@
       <div class="container">
           <div class="body-wrap">
               <div class="catagory-location">
-                 <div class="row justify-content-end">
+                 <div class="row justify-content-start">
                      <div class="col-md-6">
                   <form action="">
                                         <div class="catagory-search">
                                   <div class="row">
                            <div class="col-md-6">
-                               <select class="form-select" aria-label="Default select example">
-  <option selected>Search by categories</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
+                            
+                            <input type="text" name="search_blog" id="search_blog" class="form-control" placeholder="Search Blogs" />
+                          
                            </div>
                            
-                           <div class="col-md-6">
-                               <select class="form-select" aria-label="Default select example">
-  <option selected>Search by location</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
-                           </div>
+                      
                            
                            
                            
@@ -375,9 +367,7 @@
                  </div>
               </div>
               
-        
-   
-  
+<div class="container" id="postdisplay" name="postdisplay">
 @foreach($post_info as $i)
 <div class="card">
     @if($i->post_type == "Post With Name")
@@ -421,7 +411,7 @@
     @endif
 @endforeach
 
-
+  </div>
 
 
 
@@ -486,7 +476,33 @@
 
 <!-----------bootstrap js link------------->
 <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-
+<script>
+  $(document).ready(function(){
+  
+   fetch_post_data();
+  
+   function fetch_post_data(query = '')
+   {
+    $.ajax({
+     url:"{{ route('postsearch') }}",
+     method:'GET',
+     data:{query:query},
+     dataType:'json',
+     success:function(data)
+     {
+      $('#postdisplay').html(data.table_data);
+      $('#total_records').text(data.total_data);
+     }
+    })
+   }
+  
+   $(document).on('keyup', '#search_blog', function(){
+    var query = $(this).val();
+    fetch_post_data(query);
+   });
+  });
+  </script>
+  
 </body>
 @endif
 </html>

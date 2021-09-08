@@ -13,6 +13,8 @@ use App\Http\Controllers\RecommendDoctor;
 use App\Models\Prescription;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\SearchBlog;
+use App\Http\Controllers\SearchPost;
 use App\Models\Blog;
 
 use App\Models\Doctor;
@@ -922,3 +924,7 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
     
 })->name('viewPDF');
 
+
+Route::get('/home/blogsearch', [SearchBlog::class, 'action'])->name('blogsearch');
+
+Route::get('/doctorhome/postsearch', [SearchPost::class, 'action'])->name('postsearch');
