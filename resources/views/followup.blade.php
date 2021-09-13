@@ -322,34 +322,35 @@
    
   
     
-    <
+    
         @foreach($follows as $f)
         <div class="card">
         @foreach($patient_info as $p)
 
+
         @if($p->email == $f->patient_email)
         <h5 class="card-header">Name: {{$p->fname.' '.$p->lname}}, User {{$p->userid}}</h5>
-        
-        
-       
-        <h7 class="card-header">Date and Time: {{\Carbon\Carbon::parse($p->created_at)->toDayDateTimeString()}}</h7>
-        <h7 class="card-header">Gender: {{$p->gender}}</h7>
+        <h5 class="card-header">Date and Time: {{\Carbon\Carbon::parse($p->created_at)->toDayDateTimeString()}}</h5>
+        <h5 class="card-header">Gender: {{$p->gender}}</h5>
         <div class="card-body">
          <h5 class="card-title">Category: {{$f->problem_type}}</h5>
          <p class="card-text">{{$f->details}}</p><br>
+         <a href="" class="btn btn-primary">Give Prescription</a>
 
         @endif
         
-        <div class="text-center">
+      </div><br><br>
 
-            <a href="" class="btn btn-primary">Give Prescription</a>
+           
 
          
-        </div>
+        
         @endforeach
+        
+        
 
-        <br><br>
-    </div>
+       
+
         @endforeach
         
          

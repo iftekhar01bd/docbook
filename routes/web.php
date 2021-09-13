@@ -9,15 +9,26 @@ use App\Http\Controllers\PostController;
 use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\PostPrescription;
+use App\Http\Controllers\BotmanController;
 use App\Http\Controllers\RecommendDoctor;
 use App\Models\Prescription;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\adminController;
 use App\Http\Controllers\SearchBlog;
 use App\Http\Controllers\SearchPost;
 use App\Models\Blog;
 
 use App\Models\Doctor;
+
+
+Route::get('/c',function(){
+
+    return view('chatbot');
+});
+Route::match(['get', 'post'], '/botman', [BotManController::class, 'handle']);
+
+
 
 Route::post('user', [UserAuth::class, 'userLogin']);
 Route::post('reg', [UserAuth::class, 'userRegister']);
@@ -671,8 +682,12 @@ Route::get('home/smart_attestation/{id}', function($id){
 
     $name_high = max($name1_2, $name1_3, $name2_3);
     $recommend_specialist = "";
-   // echo $name;
-   // echo $name2; echo $name3;
+/*
+    echo $name."<br>"; echo $name2."<br>"; echo $name3."<br>";
+    echo $name1_2."<br>";
+    echo $name1_3."<br>";; echo $name2_3."<br>";;
+   echo $name_high;
+*/
     if($name_high < 95){
         $recommend_specialist = "YES";
     }else{
@@ -877,6 +892,7 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
     $recommend_specialist = "";
    // echo $name;
    // echo $name2; echo $name3;
+   //echo $name_high;
     if($name_high < 95){
         $recommend_specialist = "YES";
     }else{
@@ -928,3 +944,10 @@ Route::get('home/viewPDF/{id}/{id2}', function($id, $id2){
 Route::get('/home/blogsearch', [SearchBlog::class, 'action'])->name('blogsearch');
 
 Route::get('/doctorhome/postsearch', [SearchPost::class, 'action'])->name('postsearch');
+
+
+Route::get('/adminProfile',[adminController::Class,'adminProfile']);
+Route::get('/PendingPost',[adminController::Class,'PendingPost']);
+Route::get('/Notify/{email}/{category}',[adminController::Class,'Notify']);
+Route::get('/Delete/{id}',[adminController::Class,'Delete']);
+
