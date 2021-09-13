@@ -28,6 +28,7 @@ class SearchBlog extends Controller
          ->orWhere('content', 'like', '%'.$query.'%')
          ->orderBy('id', 'desc')
          ->get();
+      
          
       }
       else
@@ -41,24 +42,26 @@ class SearchBlog extends Controller
       {
        foreach($data as $row)
        {
-        $output .= '
-        <div class="card">
+        $output .= '<div class="card">
    
-      <h5 class="card-header">Blog Form : </h5>
-      <div class="card-body">
-
-       <form action="" method="">
-           <h4>Created At: '.Carbon::parse($row->created_at)->toDayDateTimeString().'</h4>
-           <label>Doctor Email: </label>'.$row->doctor_email.' <br>
-           <label for="title">Blog Title: </label><p>'.$row->title.'</p> <br>
-           <label for="content" style="display: flex; align-items: center;">Blog Content: </label><textarea rows="30" cols="100" id="content" name=content">'.$row->content.'</textarea>
-
+        <h5 class="card-header">Blog Form : </h5>
+        <div class="card-body">
+    
+         <form action="" method="">
+            <h4>Created At: '.Carbon::parse($row->created_at)->toDayDateTimeString().'</h4>
+            <label>Doctor Email: </label>'.$row->doctor_email.' <br>
+            <label for="title">Blog Title: </label><p>'.$row->title.'</p> <br>
+            <label for="content" style="align-items: center;">Blog Content: </label><span>'.$row->content.'</span>
            <br><br>
+            <a class="btn-primary btn-lg" href="'.'viewblog/viewcomments/'.$row->id.'"'.'>Comments</a>
 
-       </form>
-     
-       
-     </div>
+    </div>
+    <br><br>
+    <br>
+    </div>
+    <br>
+
+
         ';
        }
       }

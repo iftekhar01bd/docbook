@@ -632,6 +632,7 @@ class ComposerStaticInit5aec1f42e00c92f865ccbc3614c7c0a6
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\Blog' => __DIR__ . '/../..' . '/app/Models/Blog.php',
+        'App\\Models\\Comment' => __DIR__ . '/../..' . '/app/Models/Comment.php',
         'App\\Models\\DocSchedule' => __DIR__ . '/../..' . '/app/Models/DocSchedule.php',
         'App\\Models\\Doctor' => __DIR__ . '/../..' . '/app/Models/Doctor.php',
         'App\\Models\\FollowUp' => __DIR__ . '/../..' . '/app/Models/FollowUp.php',

@@ -1061,4 +1061,27 @@ tbody, td, tfoot, th, thead, tr {
 
 
 
+.commentbox{
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    gap: 20px;
+}
 
+.displaycomments{
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: lightgray;
+
+}
+
+.com{
+    display: flex;
+    padding: 4px;
+    flex-direction: column;
+    background-color: white;
+}

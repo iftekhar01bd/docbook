@@ -15,6 +15,7 @@ use App\Models\Prescription;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SearchBlog;
 use App\Http\Controllers\SearchPost;
 use App\Models\Blog;
@@ -951,3 +952,27 @@ Route::get('/PendingPost',[adminController::Class,'PendingPost']);
 Route::get('/Notify/{email}/{category}',[adminController::Class,'Notify']);
 Route::get('/Delete/{id}',[adminController::Class,'Delete']);
 
+Route::get('/viewblog/viewcomments/{id}', function($id){
+    $email= session('patient');
+    $user = DB::select("select email from patients where email='$email'");
+    //dd($user);
+    if(session()->has('patient')){
+        $email = session('patient');
+        $user = DB::select("select email from patients where email='$email'");
+        //dd($user);
+    }else if(session()->has('doctor')){
+        $email = session('doctor');
+        $user = DB::select("select email from doctors where email='$email'");
+        //dd($user);
+    }else{
+
+    }
+    $blogs = DB::select("select * from blogs where id='$id'");
+
+    $comments = DB::select("select * from comments where blog_id='$id' order by created_at desc");
+
+    return view("comment", ['blogs' => $blogs, 'comments'=> $comments, 'user' => $user]);
+
+});
+
+Route::post('viewblog/viewcomments/post_comment', [CommentController::class, 'postComment']);

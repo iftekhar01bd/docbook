@@ -381,7 +381,7 @@
                        <h4>Created At:  {{\Carbon\Carbon::parse($b->created_at)->toDayDateTimeString()}}</h4>
                        <label>Doctor Email: </label>{{$b->doctor_email}} <br>
                        <label for="title">Blog Title: </label><p>{{$b->title}}</p> <br>
-                       <label for="content" style="display: flex; align-items: center;">Blog Content: </label><textarea rows="30" cols="100" id="content" name='content'>{{$b->content}}</textarea>
+                       <label for="content" style="display: flex; align-items: center;">Blog Content: </label><span>{{$b->content}}</span>
             
                        <br><br>
             
