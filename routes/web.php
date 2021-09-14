@@ -18,6 +18,7 @@ use App\Http\Controllers\adminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SearchBlog;
 use App\Http\Controllers\SearchPost;
+use App\Http\Controllers\PostMessage;
 use App\Models\Blog;
 
 use App\Models\Doctor;
@@ -204,11 +205,21 @@ Route::get('recommend', [RecommendDoctor::class, 'recommend'])->name('recommend_
 
 Route::get('home/followups', function(){
     
-    $se = session('doctor');
-    $doc_info = DB::select("select * from doctors where email='$se'");
-    $follows = DB::select("select * from follow_ups where doctor_email='$se'");
-    $patient_info = DB::select("select * from patients");
-    return view('followup', ['email' => $se, 'follows' => $follows, 'patient_info' => $patient_info, 'doc_info' => $doc_info]);
+    $se = $se = session('patient');
+
+    if(session()->has('patient')){
+        $se = session('patient');
+        
+        $follows = DB::select("select * from follow_ups where p_email='$se'");
+        $patient_info = DB::select("select * from patients");
+        return view('followup', ['email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
+    }else{
+        $se = session('doctor');
+        $doc_info = DB::select("select * from doctors where email='$se'");
+        $follows = DB::select("select * from follow_ups where d_email='$se'");
+        return view('followup', ['email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
+    }
+  
 })->name('followups');
 
 
@@ -975,4 +986,26 @@ Route::get('/viewblog/viewcomments/{id}', function($id){
 
 });
 
-Route::post('viewblog/viewcomments/post_comment', [CommentController::class, 'postComment']);
+Route::post('home/view_followup/post_message', [PostMessage::class, 'postMessage']);
+Route::get('home/view_followup/{id}', function($id){
+
+    
+    $se = $se = session('patient');
+
+    if(session()->has('patient')){
+        $se = session('patient');
+        $userType = "P";
+
+        $follows = DB::select("select * from follow_ups where id='$id'");
+        $patient_info = DB::select("select * from patients");
+        return view('view_followup', ['type' => $userType,'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
+    }else{
+        $se = session('doctor');
+        $userType = "D";
+        $doc_info = DB::select("select * from doctors where email='$se'");
+        $follows = DB::select("select * from follow_ups where id='$id'");
+        return view('view_followup', ['type' => $userType, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
+    }
+
+});
+Route::post('home/post_message', [PostMessage::class, 'postMessage']);

@@ -1085,3 +1085,11 @@ tbody, td, tfoot, th, thead, tr {
     flex-direction: column;
     background-color: white;
 }
+
+.display_follows{
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: lightgray;
+
+}

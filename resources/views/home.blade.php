@@ -80,6 +80,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('followups') }}">FOLLOW UPS</a>
+        </li>
         
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>

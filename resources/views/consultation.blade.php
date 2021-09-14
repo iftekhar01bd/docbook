@@ -24,8 +24,8 @@
       window.onload = function loadit() {
           var problem = $("#problemtype").children("option:selected").val();
           var x = $(this).children("option:selected").val();
-          $('#follow_input').hide();
-          $('#for_label').hide();
+          
+         
 
           if(x == "Uncategorized"){
             $('#msg').text('Message -> Write about your unknown problem.');
@@ -129,32 +129,28 @@
             $('#msg').text('Message -> Please post your gyneacology realted problems.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
-            $('#follow_input').hide();
+            
           }
           else if(x == "Family Planning"){
             $('#msg').text('Message -> Get consultation regarding family planning{anonoymous or identified.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
+            
           }
           else if(x == "Menstruation"){
             $('#msg').text('Message -> Please post about your menstruation realted queires');
             $('#posttype').append('<option>Post Anonymously</option>');
-            $('#follow_input').hide();
+            
           }
           else if(x == "Respiratory"){
             $('#msg').text('Message -> Post your respiratory related issues.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
+            
           }
           
-          else if(x == "FOLLOW UP"){
-            $('#msg').text('Message -> Please Select the doctor you want to send the post to.');
-            $('#follow_input').show();
-            $('#for_label').show();
-          }
+          
 
           else{
 
@@ -172,8 +168,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
 
           }
 
@@ -187,8 +183,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
 
 
           }
@@ -198,8 +194,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
 
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
 
             
           }
@@ -210,8 +206,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
 
           else if(x == "Nutrition"){
@@ -219,8 +215,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
 
           else if(x == "Mens Health"){
@@ -228,8 +224,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
 
           else if(x == "Womens Health"){
@@ -237,8 +233,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
 
           else if(x == "Pregnancy"){
@@ -246,8 +242,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
 
           }
 
@@ -256,8 +252,8 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
 
           else if(x == "Skin"){
@@ -266,70 +262,63 @@
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
           else if(x == "Urology"){
             $('#msg').text('Message ->  Please post your urology related issues.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
           else if(x == "Child Care"){
             $('#msg').text('Message -> Please post your pediatrics realted issues.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
 
           else if(x == "Sex Education"){
             $('#msg').text('Message -> Make post to learn and improve about your sexual wellbeing.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
 
           else if(x == "Gynecology"){
             $('#msg').text('Message -> Please post your gyneacology realted problems.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
           else if(x == "Family Planning"){
             $('#msg').text('Message -> Get consultation regarding family planning{anonoymous or identified.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post Anonymously</option>');
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
           else if(x == "Menstruation"){
             $('#msg').text('Message -> Please post about your menstruation realted queires');
 
             $('#posttype').append('<option>Post Anonymously</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
           else if(x == "Respiratory"){
             $('#msg').text('Message -> Post your respiratory related issues.');
             $('#posttype').empty();
             $('#posttype').append('<option>Post With Name</option>');
-            $('#follow_input').hide();
-            $('#for_label').hide();
+            
+           
           }
           
-          else if(x == "FOLLOW UP"){
-            $('#msg').text('Message -> Please select the doctor you want to send post to.');
-            $('#follow_input').show();
-            $('#for_label').show();
-
-
-
-          }
+         
 
           else{
 
@@ -661,7 +650,7 @@
   <option value="Family Planning">Family Planning</option>
   <option value="Menstruation">Menstruation</option>
   <option value="Respiratory ">Respiratory</option>
-  <option value="FOLLOW UP">FOLLOW UP</option>
+
 
 
 
@@ -679,7 +668,6 @@
                         Write about your unknown problem.
                       </label><br><br>
 
-                      <label id="for_label" for="follow_input">Choose Doctor -> </label><input name="follow_input" id="follow_input" class="typeahead form-control" type="text"><br/><br>
                     </div>
                          
                           <div class="form-floating">
@@ -853,22 +841,6 @@
 
 <!-----------bootstrap js link------------->
 <script src="/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    var path = "{{ route('recommend_doc') }}";
 
-    
-    
-    $('input.typeahead').typeahead({
-        source:  function (q, process) {
-        return $.get(path, { q: q }, function (data) {
-                
-                return process(data);
-            });
-        }
-    });
-
-
-
-</script>
 </body>
 </html>

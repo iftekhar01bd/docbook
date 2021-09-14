@@ -15,7 +15,7 @@
     
 </head>
 
-@if(Session::has('doctor'))
+
 <body>
 <!---------section-1---------->
 <!------top-heading------>
@@ -92,9 +92,7 @@
   
               <div class="profile-photo">
                 
-            @foreach($doc_info as $i)
-            <a href="#"><img width='100px' height='80px' src={{ "/".$i->propic }} alt="profile pic"></a>
-            @endforeach
+            
              
             
              
@@ -318,43 +316,76 @@
                  </div>
               </div>
               
-        
+    
    
   
+    <form action="post_message" method="POST" enctype="multipart/form-data" >
+    @csrf
+    @if(isset($patient_info))
+    <input name="p_email" type="hidden" value={{$patient_info[0]->email}}>
+    <input name="type" type="hidden" value="P">
+    <input name="id" type="hidden" value="">
+
+    <span>Doctor Email: </span><br><input name="d_email"><br>
+    @else
+    <input name="d_email" type="hidden" value={{$doc_info[0]->email}}>
+    <input name="type" type="hidden" value="D">
+
+    <span>Patient Email: </span><br><input name="p_email"><br>
+
+    @endif
     
     
-        @foreach($follows as $f)
-        <div class="card">
-        @foreach($patient_info as $p)
-
-
-        @if($p->email == $f->patient_email)
-        <h5 class="card-header">Name: {{$p->fname.' '.$p->lname}}, User {{$p->userid}}</h5>
-        <h5 class="card-header">Date and Time: {{\Carbon\Carbon::parse($p->created_at)->toDayDateTimeString()}}</h5>
-        <h5 class="card-header">Gender: {{$p->gender}}</h5>
+    
+    <span style="color: darkblue">Write Message: </span><br>
+    <textarea name="msg" rows="5" cols="40"></textarea><br><br>
+    <label>Upload Image:</label><br>
+    <input class="form-control" name="image" type="file" id="image"> <br> <br>
+    <input type="submit" class="btn-primary btn-lg" value="Send"><br><br>
+       
+    </form>
+    @if(count($follows) > 0)
+    @php
+     $last_id = "";   
+    @endphp
+    @foreach($follows as $f)
+    @if($last_id != $f->id)
+      <div class="card">
+    
+        <h5 class="card-header">Patient Email: {{$f->p_email}}</h5>
+        <h5 class="card-header">Doctor Email: {{$f->d_email}}</h5>
+        <h5 class="card-header">Date and Time: {{\Carbon\Carbon::parse($f->created_at)->toDayDateTimeString()}}</h5>
         <div class="card-body">
-         <h5 class="card-title">Category: {{$f->problem_type}}</h5>
-         <p class="card-text">{{$f->details}}</p><br>
-         <a href="" class="btn btn-primary">Give Prescription</a>
-
-        @endif
-        
+         <a href="/home/view_followup/{{$f->id}}" class="btn btn-primary">View</a>
+    
+      
+        </div>
       </div><br><br>
+    
+    @endif
 
-           
-
-         
-        
-        @endforeach
-        
-        
-
+    @php
+     $last_id = $f->id;   
+    @endphp
+ 
        
 
-        @endforeach
-        
-         
-        
+     
+    
+    @endforeach
+    
+    
+
+    
+     
+    @else
+    <br><br>
+    <h5 style="text-align: center">NO FOLLOW UPS</h5>
+
+    <
+
+    @endif
+    
 
          
  </div>
@@ -433,5 +464,5 @@
 <script src="/js/bootstrap.min.js"></script>
 
 </body>
-@endif
+
 </html>
