@@ -396,7 +396,7 @@ background: #eeeeee;
 }
 .patient-post-left .patient-post-left-text p a{}
 .patient-post-middle{
-    height: 450px;
+   
     background: white;
     border-radius: 10px;
     padding: 30px 20px;
@@ -1092,4 +1092,75 @@ tbody, td, tfoot, th, thead, tr {
     flex-direction: column;
     background-color: lightgray;
 
+}
+
+.covBtn{
+    display: block;
+    text-align: center;
+    
+    width: 200px;
+    height: 50px;
+    border: 2px solid blue;
+    font-weight: bold;
+    color: darkblue;
+    border-radius: 5%;
+    background-color: #babef3;
+    padding-top: 5px;
+
+}
+
+.covBtn:hover{
+    
+    background-color: cyan;
+}
+
+.rateBtn{
+    display: block;
+    text-align: center;
+    
+    width: 200px;
+    height: 50px;
+    border: 2px solid blue;
+    font-weight: bold;
+    color: black;
+    border-radius: 5%;
+    background-color: lightblue;
+    padding-top: 5px;
+
+}
+
+.rateBtn:hover{
+    
+    background-color: royalblue;
+    color: white;
+}
+
+.rateBox{
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.rateName{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.rate{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.rateWhole{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 }

@@ -48,10 +48,10 @@ class SearchBlog extends Controller
         <div class="card-body">
     
          <form action="" method="">
-            <h4>Created At: '.Carbon::parse($row->created_at)->toDayDateTimeString().'</h4>
-            <label>Doctor Email: </label>'.$row->doctor_email.' <br>
-            <label for="title">Blog Title: </label><p>'.$row->title.'</p> <br>
-            <label for="content" style="align-items: center;">Blog Content: </label><span>'.$row->content.'</span>
+            <h4><b>Created At:</b> '.Carbon::parse($row->created_at)->toDayDateTimeString().'</h4>
+            <label><b>Doctor Email: </b> </label> &nbsp'.$row->doctor_email.' <br>
+            <label for="title"><b>Blog Title:</b> </label><p>'.$row->title.'</p> <br>
+            <label for="content" style="align-items: center;"><b>Blog Content:</b> </label><br><span>'.$row->content.'</span>
            <br><br>
             <a class="btn-primary btn-lg" href="'.'viewblog/viewcomments/'.$row->id.'"'.'>Comments</a>
 

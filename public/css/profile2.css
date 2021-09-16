@@ -31,7 +31,7 @@
 .info > span{
     font-size: 22px;
     font-weight: bold;
-    color: darkblue;
+    color: black;
 }
 .infoMain{
     display: flex;
@@ -68,7 +68,7 @@
     padding: 5px;
     
     flex-wrap: wrap;
-    color: darkblue;
+    color: black;
 
 }
 .rating > a{
@@ -88,14 +88,15 @@
 .doctors{
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: rgb(223, 230, 233);
-    align-items: flex-start;
-
+    align-items: center;
+ justify-content: center;
     padding: 5px;
     border: 2px solid black;
     border-radius: 20px;
-    width: 100%;
+    
+   
     
     flex-wrap: wrap;
     
@@ -106,10 +107,11 @@
 
 .doc_info{
     display: flex;
-    flex-direction: row;
-    background-color: lightblue;
+    flex-direction: column;
+    background-color: white;
     align-items: center;
-    width: 100%;
+    justify-content: center;
+    width: 70%;
     padding: 5px;
     border: 2px solid rgb(56, 42, 180);
     border-radius: 20px;
@@ -124,7 +126,7 @@
     
 }
 .details > span{
-    color: darkblue;
+    color: black;
 }
 .details{
     display: flex;

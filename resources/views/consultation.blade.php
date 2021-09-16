@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wellcome to my website</title>
+    <title>DocBook: Consultation</title>
 <!--    ------css link---------->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+
 <!--    -------font awesome kit link------->
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
 
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
-
+    <link rel="stylesheet" href="/css/consul.css">
     
     
     <script>
@@ -158,419 +159,94 @@
 
       }
           
-      $(document).ready(function(){
-       
-  
-      $("#problemtype").change(function(){
-          var x = $(this).children("option:selected").val();
-          if(x == "Uncategorized"){
-            $('#msg').text('Message -> Write about your unknown problem.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-
-          }
-
-           
-                
-             
-          else if(x == "Mental Health"){
-
-            $('#msg').text('Message -> Write your problem in details.');
-
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-
-
-          }
-
-          else if(x == "Romantic Relationship"){
-            $('#msg').text('Message -> Please write your emotional feelings and attraction related problem in details.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-
-            
-           
-
-            
-          }
-
-          else if(x == "Fitness"){
-            $('#msg').text('Message -> Please post exercise related queries.');
-
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-
-          else if(x == "Nutrition"){
-            $('#msg').text('Message -> Please post diet related queries.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-
-          else if(x == "Mens Health"){
-            $('#msg').text('Message -> Please post Male related health issues.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-
-          else if(x == "Womens Health"){
-            $('#msg').text('Message -> Please post female related health issues.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-
-          else if(x == "Pregnancy"){
-            $('#msg').text('Message -> Please post pregnancy related queries free of cost.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-
-          }
-
-          else if(x == "Ear Nose Throat"){
-            $('#msg').text('Message -> Please post your Ear Nose Throat realted issues.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-
-          else if(x == "Skin"){
-            $('#msg').text('Message -> Please post your urology related issues.');
-
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-          else if(x == "Urology"){
-            $('#msg').text('Message ->  Please post your urology related issues.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            
-           
-          }
-          else if(x == "Child Care"){
-            $('#msg').text('Message -> Please post your pediatrics realted issues.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-
-          else if(x == "Sex Education"){
-            $('#msg').text('Message -> Make post to learn and improve about your sexual wellbeing.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            
-           
-          }
-
-          else if(x == "Gynecology"){
-            $('#msg').text('Message -> Please post your gyneacology realted problems.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            
-           
-          }
-          else if(x == "Family Planning"){
-            $('#msg').text('Message -> Get consultation regarding family planning{anonoymous or identified.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post Anonymously</option>');
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-          else if(x == "Menstruation"){
-            $('#msg').text('Message -> Please post about your menstruation realted queires');
-
-            $('#posttype').append('<option>Post Anonymously</option>');
-            
-           
-          }
-          else if(x == "Respiratory"){
-            $('#msg').text('Message -> Post your respiratory related issues.');
-            $('#posttype').empty();
-            $('#posttype').append('<option>Post With Name</option>');
-            
-           
-          }
-          
-         
-
-          else{
-
-          }
-          
-      });
-  });
+     
   </script>
     
 </head>
 <body>
-<!---------section-1---------->
-<!------top-heading------>
-<div class="container-fluid p-0">
-    <div class="section-1">
+
   <div class="container">
-            <div class="row justify-content-end align-items-center">
-            
-            <div class="col-md-6 offset-3">
-                <p style="margin: 0px;">Patient's Page</p>
-            </div>
-            
-            
-            
-        </div>
-  </div>
+    <div class="logo">
+        <img src="/images/logofin.png" alt="LOGO" width="160px" height="60px">
+  
     </div>
-</div>
-
-<!---------bottom heading-------->
-<!---------Navigation-bar----------->
-<div class="container-fluid p-0">
-    <div class="bottom-heading">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-  <div class="container logo-relation">
-  <div class="row align-items-center" style="width: 100%;">
-          <div class="col-md-2">
-              <div class="logo-wrap">
-                  <a class="navbar-brand" href="#">
-                  <img src="images/logo.png" alt="">
-              </a>
-              </div>
-          </div>
+  
+    <div class="right_container">
+        
+        <div class="bottom">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-top">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-lg-flex align-items-center">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{route('home')}}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('view_prescriptions') }}">View Prescriptions</a>
+                  </li>
          
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('view_profile') }}">Doctors</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('followups') }}">FOLLOW UPS</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                  </li>
+  <li>
     
     
-<div class="col-md-10">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      </form>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        
-        
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('home') }}">Homepage</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">News Feed</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        
-       
-      </ul>
-      <!-- --------profile section--------   -->
-
+  
+  <div class="profile-wrap">
     
-      <div class="profile-wrap">
-        <div class="name">
-        <a href="#">
-         
-          <p>{{session('patient')}}</p>
-      
-        </a>
-  </div>
-
-    <div class="profile-photo">
-      
+    <div class="photoD">
   @foreach($info as $i)
- 
-  <a href="#"><img width='100px' height='80px' src={{ "/".$i->propic }} alt="profile pic"></a>
+  <a href="#"><img class='photo' width='100px' height='80px' src=/{{ $i->propic }} alt="profile pic"></a>
   @endforeach
-   
   
-   
-      
-</div>
-</div>
-<a href="/logout">Log Out </a>
-</div>
-              </div>
-     
-  
-   
-      
-      
-      
-      
-      
-      
-      
-     </div> 
-    
-</div>
-
-   
-   
-   
-   
-   
-    
-    
-  </div>
-    
-  
-  </div>
-</nav> 
-     
-     
-     
-     
-       
     </div>
-</div>
-
-
-<!--------bottom heading-2------->
-
-<div class="container-fluid p-0">
-    <div class="bottom-heading2" style="background: #d2d2d2">
-    <nav class="navbar navbar-expand-lg navbar-light">
+  
+  
   <div class="container">
-  <div class="row align-items-center" style="width: 100%;">
-          <div class="col-md-3">
-              <form class="d-flex">
-       
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <input type="submit" value="Find" style="background: #9ba2fd;
-    border: 1px solid #6c6cff;
-    color: white;
-    border-radius: 10px;
-    padding: 0px 33px;
-    font-weight: 500;">
-        
-        
-      </form>
-      
-          </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    
-<div class="col-md-9">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        
-<!--
-        <select class="form-select" aria-label="Default select example" style="width: 15%;border-radius: 20px 10px 20px 10px;
-    margin-right: 15px;">
-       <option selected>Set location</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-       </select>
--->
-      
-      
-      
-      
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Hospital</a>
-        </li>
+    <div class="name">
+    <a href="#">
+     
+      <p>{{session('patient')}}</p>
+      <a href="/logout">Log Out </a>
   
-        <li class="nav-item">
-          <a class="nav-link" href="#">Doctor</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Ambulance</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Drugs and suppliments</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Saved service</a>
-        </li>
-        
-       
-      </ul>
-      <!-- --------profile section--------   -->
-
+    </a>
+  </div>
     
-              <div class="profile-wrap">
-                  <div class="messenger">
-                  <a href="#">
-                      <i class="fab fa-facebook-messenger"></i>
-                  </a>
-            </div>
+  </div>
   
-              <div class="notification">
-                  <i class="fas fa-bell"></i>
-          </div>
+  </div>
+  </li>
+  
+  <li>
+    
+  </li>
+                </ul>
+  
+  
               </div>
-     
+            </div>
+          </nav>
   
-   
-      
-      
-      
-      
-      
-      
-      
-     </div> 
-    
-</div>
-
-   
-   
-   
-   
-   
-    
-    
-  </div>
-    
-  
-  </div>
-</nav> 
-     
-     
-     
-     
-       
+        </div>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
+  </div>
+  
+  
+  
+  
 
 
 
@@ -581,25 +257,41 @@
 <!--------------section--2---------->
 <form action="post_issue" method="POST" enctype="multipart/form-data">
   @csrf
-<div class="container-fluid p-0">
+<div class="container">
     <div class="patient-post-wrap">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                   <div class="patient-post-left">
+                   <div class="row">
                        <div class="row">
-                           <div class="col-md-12">
-                              <div class="patient-post-left-text">
-                                 <p><a href="#">Trending Topics</a></p> 
+                           <div class="row-md-12">
+                              <div class="row">
+                                 <h3 href="#" style="color: darkblue; font-weight: bold; ">Trending Topics</h3><br>
                                  
-                                 <p><a href="#">Covid-19  Update</a></p> 
+                                 
                                  
                                   
                               </div> 
                            </div>
                            <div class="col-md-12">
-                              <div class="patient-post-left-text">
-                                 <p><a href="#">Advertise</a></p> 
+                              <div class="rateWhole">
+                                <p><a class="covBtn" href="http://103.247.238.92/webportal/pages/covid19.php?fbclid=IwAR28SOoRXiL52-ysVyRcXh6kYg9c9KHn5AK82iRvsYxqUt1NZ52Tc6iLIXE" target="blank">Covid-19  Update</a></p> 
+                                 <p><a class="covBtn" href="#">Top Doctors</a></p> 
+                                 @foreach($rated_docs as $r)
+
+                                 <div class="rateBox">
+                                   <div class="rateName">
+                                    <img width='50px' height='50px' src={{ "/".$r->propic }} alt="pic">
+                                    <p>{{$r->fname}} {{$r->lname}}</p> <br>
+                                   </div>
+                                 <div class="rate">
+                                  <p>Rating: {{$r->rating}}</p>
+                                </div>
+                                  
+
+                                 </div><br>
+
+                                 @endforeach
                                  
                             
                                  
@@ -607,14 +299,29 @@
                               </div> 
                            </div>
                            <div class="col-md-12">
-                              <div class="patient-post-left-text">
-                                 <p><a href="#">Doctors Article</a></p> 
+                              <div class="container">
+                                 <p><a class="covBtn" href="{{route('home')}}">Doctors Posts</a></p> 
                             
                                  
                                   
                               </div> 
                            </div>
                            
+                      
+                        <div class="col-md-12">
+                            <div class="container">
+                            <p><a class="covBtn" href="{{ route('view_prescriptions') }}">Medical History</a></p>
+                        </div>
+                        </div>
+                 
+                       
+                          
+                         
+                          
+                          
+                          
+                  
+                        
                            
                            
                        </div>
@@ -649,7 +356,7 @@
   <option value="Gynecology">Gynecology</option>
   <option value="Family Planning">Family Planning</option>
   <option value="Menstruation">Menstruation</option>
-  <option value="Respiratory ">Respiratory</option>
+  <option value="Respiratory">Respiratory</option>
 
 
 
@@ -715,48 +422,18 @@
         {{ session()->get('message') }}
     </div>
     @endif
-      <div class="post-btn">
-          <input type="submit" value="Post">
+      <div class="container">
+        <input class="btn-primary btn-large" type="submit" value="   Post   ">
       </div>
+        
+      
         </form>              
      
                       
               </div>
           </div>  
  
-     <div class="col-md-3">
-         <div class="patient-post-right">
-             <div class="row">
-                 <div class="col-md-12">
-                     <div class="patient-post-right-text">
-                     <p><a href="#">Prescription</a></p>
-                 </div>
-                 </div>
-                 <div class="col-md-12">
-                     <div class="patient-post-right-text">
-                     <p><a href="#">Reports</a></p>
-                 </div>
-                 </div>
-                 <div class="col-md-12">
-                     <div class="patient-post-right-text">
-                     <p><a href="#">Medical History</a></p>
-                 </div>
-                 </div>
-                 <div class="col-md-12">
-                     <div class="patient-post-right-text">
-                     <p><a href="#">Balance Statement</a></p>
-                 </div>
-                 </div>
-                 <div class="col-md-12">
-                     <div class="patient-post-right-text">
-                     <p><a href="#">Activity Log</a></p>
-                 </div>
-                 </div>
-                 
-                 
-                 
-             </div>
-         </div>
+
      </div>          
                
                
@@ -838,7 +515,186 @@
 
 
 
+<script>
 
+$(document).ready(function(){
+       
+  
+       $("#problemtype").change(function(){
+           var x = $(this).children("option:selected").val();
+           if(x == "Uncategorized"){
+             $('#msg').text('Message -> Write about your unknown problem.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+ 
+           }
+ 
+            
+                 
+              
+           else if(x == "Mental Health"){
+ 
+             $('#msg').text('Message -> Write your problem in details.');
+ 
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+ 
+ 
+           }
+ 
+           else if(x == "Romantic Relationship"){
+             $('#msg').text('Message -> Please write your emotional feelings and attraction related problem in details.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+ 
+             
+            
+ 
+             
+           }
+ 
+           else if(x == "Fitness"){
+             $('#msg').text('Message -> Please post exercise related queries.');
+ 
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+ 
+           else if(x == "Nutrition"){
+             $('#msg').text('Message -> Please post diet related queries.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+ 
+           else if(x == "Mens Health"){
+             $('#msg').text('Message -> Please post Male related health issues.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+ 
+           else if(x == "Womens Health"){
+             $('#msg').text('Message -> Please post female related health issues.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+ 
+           else if(x == "Pregnancy"){
+             $('#msg').text('Message -> Please post pregnancy related queries free of cost.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+ 
+           }
+ 
+           else if(x == "Ear Nose Throat"){
+             $('#msg').text('Message -> Please post your Ear Nose Throat realted issues.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+ 
+           else if(x == "Skin"){
+             $('#msg').text('Message -> Please post your skin related issues.');
+ 
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+           else if(x == "Urology"){
+             $('#msg').text('Message ->  Please post your urology related issues.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             
+            
+           }
+           else if(x == "Child Care"){
+             $('#msg').text('Message -> Please post your pediatrics realted issues.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+ 
+           else if(x == "Sex Education"){
+             $('#msg').text('Message -> Make post to learn and improve about your sexual wellbeing.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             
+            
+           }
+ 
+           else if(x == "Gynecology"){
+             $('#msg').text('Message -> Please post your gyneacology realted problems.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             
+            
+           }
+           else if(x == "Family Planning"){
+             $('#msg').text('Message -> Get consultation regarding family planning{anonoymous or identified.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post Anonymously</option>');
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }
+           else if(x == "Menstruation"){
+             $('#msg').text('Message -> Please post about your menstruation realted queires');
+ 
+             $('#posttype').append('<option>Post Anonymously</option>');
+             
+            
+           }
+           else if(x == "Respiratory"){
+ 
+             
+             $('#msg').text('Message -> Post your respiratory related issues.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post With Name</option>');
+             
+            
+           }else if(x == "Ear Noise Throat"){
+              
+            $('#msg').text('Message -> Post your ear, noise and throat related issues.');
+             $('#posttype').empty();
+             $('#posttype').append('<option>Post With Name</option>');
+             $('#posttype').append('<option>Post Anonymously</option>');
+           }
+           
+          
+ 
+           else{
+            
+ 
+           }
+           
+       });
+   });
+  </script>
 <!-----------bootstrap js link------------->
 <script src="/js/bootstrap.min.js"></script>
 

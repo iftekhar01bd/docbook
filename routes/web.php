@@ -142,7 +142,8 @@ Route::get('home/consultation', function(){
     $se = session('patient');
     $info = DB::select("select * from patients where email='$se'");
     $docs = DB::select('select * from doctors');
-    return view('consultation',  ['info' => $info, 'docs' => $docs]);
+    $rated_docs = DB::select('select * from doctors order by rating desc limit 20');
+    return view('consultation',  ['info' => $info, 'docs' => $docs, "rated_docs" => $rated_docs]);
 })->name('consul');
 
 Route::get('/home/viewpost/{id}', function($id){
@@ -206,18 +207,20 @@ Route::get('recommend', [RecommendDoctor::class, 'recommend'])->name('recommend_
 Route::get('home/followups', function(){
     
     $se = $se = session('patient');
+    $info = DB::select("select * from patients where email='$se'");
 
     if(session()->has('patient')){
         $se = session('patient');
         
         $follows = DB::select("select * from follow_ups where p_email='$se'");
         $patient_info = DB::select("select * from patients");
-        return view('followup', ['email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
+        return view('followup', ['info' => $info, 'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
     }else{
+        $info = DB::select("select * from doctors where email='$se'");
         $se = session('doctor');
         $doc_info = DB::select("select * from doctors where email='$se'");
         $follows = DB::select("select * from follow_ups where d_email='$se'");
-        return view('followup', ['email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
+        return view('followup', ['info' => $info, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
     }
   
 })->name('followups');
@@ -277,6 +280,7 @@ Route::get('home/viewblog', function(){
 
 Route::get('home/view_prescriptions', function(){
     $se = session('patient');
+    $info = DB::select("select * from patients where email='$se'");
     
 
     $post_info = DB::select("select * from med_posts where patient_email='$se'");
@@ -284,7 +288,7 @@ Route::get('home/view_prescriptions', function(){
       
     $patient_info = DB::select("select * from patients where email='$se'");
 
-    return view('view_prescriptions',  ['post_info' => $post_info, 'patient_info' => $patient_info]);
+    return view('view_prescriptions',  ['info' => $info, 'post_info' => $post_info, 'patient_info' => $patient_info]);
     
 })->name('view_prescriptions');
 
@@ -543,6 +547,7 @@ function convertPrescription_t($no, $string){
 Route::get('home/smart_attestation/{id}', function($id){
     $id_p = $id;
     $se = session('patient');
+    $info = DB::select("select * from patients where email='$se'");
     $patient_info = DB::select("select * from patients where email='$se'");
 
     $post_info = DB::select("select * from med_posts where id='$id'");
@@ -743,7 +748,7 @@ Route::get('home/smart_attestation/{id}', function($id){
 
    // $string = "";
 
-    return view('smart_attestation',  ['id_p' => $id_p, 'chosen_ids' => $chosen_ids, 'detail1_t' => $detail1_t, 'detail2_t' => $detail2_t, 'detail3_t' => $detail3_t, 'detail1' => $detail1, 'detail2' => $detail2, 'detail3' => $detail3, 'recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
+    return view('smart_attestation',  ['info' => $info, 'id_p' => $id_p, 'chosen_ids' => $chosen_ids, 'detail1_t' => $detail1_t, 'detail2_t' => $detail2_t, 'detail3_t' => $detail3_t, 'detail1' => $detail1, 'detail2' => $detail2, 'detail3' => $detail3, 'recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
     
 })->name('smart_attestation');
 
@@ -966,6 +971,9 @@ Route::get('/Delete/{id}',[adminController::Class,'Delete']);
 Route::get('/viewblog/viewcomments/{id}', function($id){
     $email= session('patient');
     $user = DB::select("select email from patients where email='$email'");
+    
+ 
+ $info = DB::select("select * from patients where email='$email'");
     //dd($user);
     if(session()->has('patient')){
         $email = session('patient');
@@ -982,15 +990,18 @@ Route::get('/viewblog/viewcomments/{id}', function($id){
 
     $comments = DB::select("select * from comments where blog_id='$id' order by created_at desc");
 
-    return view("comment", ['blogs' => $blogs, 'comments'=> $comments, 'user' => $user]);
+    return view("comment", ['info' => $info, 'blogs' => $blogs, 'comments'=> $comments, 'user' => $user]);
 
 });
 
 Route::post('home/view_followup/post_message', [PostMessage::class, 'postMessage']);
+Route::post('post_comment', [CommentController::class, 'postComment']);
+
 Route::get('home/view_followup/{id}', function($id){
 
     
     $se = $se = session('patient');
+    $info = DB::select("select * from patients where email='$se'");
 
     if(session()->has('patient')){
         $se = session('patient');
@@ -998,13 +1009,15 @@ Route::get('home/view_followup/{id}', function($id){
 
         $follows = DB::select("select * from follow_ups where id='$id'");
         $patient_info = DB::select("select * from patients");
-        return view('view_followup', ['type' => $userType,'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
+        return view('view_followup', ['info' => $info, 'type' => $userType,'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
     }else{
         $se = session('doctor');
+        $info = DB::select("select * from patients where email='$se'");
+
         $userType = "D";
         $doc_info = DB::select("select * from doctors where email='$se'");
         $follows = DB::select("select * from follow_ups where id='$id'");
-        return view('view_followup', ['type' => $userType, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
+        return view('view_followup', ['info' => $info, 'type' => $userType, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
     }
 
 });

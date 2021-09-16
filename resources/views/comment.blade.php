@@ -6,7 +6,7 @@
     <title>DocBook : Patient Homepage</title>
 <!--    ------css link---------->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog.css">
 <!--    -------font awesome kit link------->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
@@ -28,262 +28,90 @@
     
 </head>
 
-@if(Session::has('patient'))
 <body>
-<!---------section-1---------->
-<!------top-heading------>
-<div class="container-fluid p-0">
-    <div class="section-1">
-  <div class="container">
-            <div class="row justify-content-end align-items-center">
-            
-            <div class="col-md-6 offset-3">
-                <p style="margin: 0px;">Patient's Page</p>
-            </div>
-            
-            
-            
-        </div>
-  </div>
-    </div>
-</div>
+
 
 <!---------bottom heading-------->
 <!---------Navigation-bar----------->
-<div class="container-fluid p-0">
-    <div class="bottom-heading">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-  <div class="container logo-relation">
-  <div class="row align-items-center" style="width: 100%;">
-        <div class="col-md-2">
-              <div class="logo-wrap">
-                  <a class="navbar-brand" href="#">
-                  <img src="icons/logofin.png" alt="">
-              </a>
-              </div>
-          </div>
-         
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    
-<div class="col-md-12">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="d-flex">
-      </form>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
-        </li>
+<div class="container">
+  <div class="logo">
+      <img src="/images/logofin.png" alt="LOGO" width="160px" height="60px">
 
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ route('view_prescriptions') }}">View Prescriptions</a>
-        </li>
-        
-        
-        
-        <li class="nav-item">
-          <a class="nav-link" href="#">News Feed</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('view_profile') }}">Doctors</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
-        </li>
-        
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        
+  </div>
+
+  <div class="right_container">
+      
+      <div class="bottom">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-top">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-lg-flex align-items-center">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{{route('home')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{{ route('view_prescriptions') }}">View Prescriptions</a>
+                </li>
        
-      </ul>
-      <!-- --------profile section--------   -->
-
-    
-              <div class="profile-wrap">
-                  <div class="name">
-                  <a href="#">
-                   
-                    <p>{{session('patient')}}</p>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('view_profile') }}">Doctors</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('followups') }}">FOLLOW UPS</a>
+                </li>
                 
-                  </a>
-            </div>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">About</a>
+                </li>
+<li>
   
-              <div class="profile-photo">
-                
-           
-             
-            
-             
-                
+  
+
+<div class="profile-wrap">
+  
+  <div class="photoD">
+@foreach($info as $i)
+<a href="#"><img class='photo' width='100px' height='80px' src=/{{ $i->propic }} alt="profile pic"></a>
+@endforeach
+
+  </div>
+
+
+<div class="container">
+  <div class="name">
+  <a href="#">
+   
+    <p>{{session('patient')}}</p>
+    <a href="/logout">Log Out </a>
+
+  </a>
+</div>
+  
+</div>
+
+</div>
+</li>
+
+<li>
+  
+</li>
+              </ul>
+
+
+            </div>
           </div>
+        </nav>
 
-            </div>
-              <a href="/logout">Log Out </a>
-            </div>
-              </div>
-
-              
-     
-  
-   
-      
-      
-      
-      
-      
-      
-      
-     </div> 
-    
+      </div>
+  </div>
 </div>
 
-   
-   
-   
-   
-   
-    
-    
-  </div>
-    
-  
-  </div>
-</nav> 
-     
-     
-     
-     
-       
-    </div>
-</div>
-
-
-<!--------bottom heading-2------->
-
-<div class="container-fluid p-0">
-    <div class="bottom-heading2" style="background: #d2d2d2">
-    <nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-  <div class="row align-items-center" style="width: 100%;">
-          <div class="col-md-3">
-             <form class="d-flex">
-       
-        
-        
-        
-      </form>
-      
-          </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    
-<div class="col-md-9">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        
-<!--
-        <select class="form-select" aria-label="Default select example" style="width: 15%;border-radius: 20px 10px 20px 10px;
-    margin-right: 15px;">
-       <option selected>Set location</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-       </select>
-      
--->
-      
-      
-      
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Hospital</a>
-        </li>
-  
-        <li class="nav-item">
-          <a class="nav-link" href="#">Doctor</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Ambulance</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Drugs and suppliments</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Saved service</a>
-        </li>
-        
-       
-      </ul>
-      <!-- --------profile section--------   -->
-
-    
-              <div class="profile-wrap">
-                  <div class="messenger">
-                  <a href="#">
-                      <i class="fab fa-facebook-messenger"></i>
-                  </a>
-            </div>
-  
-              <div class="notification">
-                  <i class="fas fa-bell"></i>
-          </div>
-              </div>
-     
-  
-   
-      
-      
-      
-      
-      
-      
-      
-     </div> 
-    
-</div>
-
-   
-   
-   
-   
-   
-    
-    
-  </div>
-    
-  
-  </div>
-</nav> 
-     
-     
-     
-     
-       
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--------------section--2---------->
 
 <div class="container-fluid p-0">
   <div class="all-body-wrap" style="background: #f3f1f1;
@@ -336,15 +164,15 @@
       <div class="card-body">
 
      
-           <h4>Created At:  {{\Carbon\Carbon::parse($b->created_at)->toDayDateTimeString()}}</h4>
-           <label>Doctor Email: </label>{{$b->doctor_email}} <br>
-           <label for="title">Blog Title: </label><p>{{$b->title}}</p> <br>
-           <label for="content" style="align-items: center;">Blog Content: </label><span>{{$b->content}}</span>
+           <h4><b>Created At: </b> {{\Carbon\Carbon::parse($b->created_at)->toDayDateTimeString()}}</h4>
+           <label><b>Doctor Email:&nbsp</b> </label>{{$b->doctor_email}} <br>
+           <label for="title"><b> Blog Title:</b> </label><br><p>{{$b->title}}</p> <br>
+           <label for="content" style="align-items: center;"><b>Blog Content: </b></label><br><span>{{$b->content}}</span>
          <br><br>
 
          <div class="commentbox">
         
-            <form action="post_comment" method="POST" enctype="multipart/form-data" >
+            <form action="/post_comment" method="POST" enctype="multipart/form-data" >
              @csrf
              <span style="color: darkblue">Write Comment: </span><br>
               <textarea name="content" rows="5" cols="40"></textarea><br><br>
@@ -363,9 +191,9 @@
                 @foreach($comments as $c)
                 <div class="com">
                 
-                <span>Day, Date and Time: {{\Carbon\Carbon::parse($c->created_at)->toDayDateTimeString()}}</span> <br>
-                <span>User Email: {{$c->user_email}}</span> <br>
-                <span>Comment: {{$c->content}}</span> <br>
+                <span><b>Day, Date and Time: </b> {{\Carbon\Carbon::parse($c->created_at)->toDayDateTimeString()}}</span> <br>
+                <span><b>User Email: </b> {{$c->user_email}}</span> <br>
+                <span><b>Comment: </b>{{$c->content}}</span> <br>
                 
                 </div><br><br>
 
@@ -461,19 +289,5 @@
 
 </body>
 
-@elseif(Session::has('doctor'))
-<h2>Doctor page</h2>  </div>
-<a href="/logout">Log Out </a>
-</div>
-@elseif(Session::has('specialist'))
-<h2>Specialist page</h2>  </div>
-<a href="/logout">Log Out </a>
-</div>
-@elseif(Session::has('admin'))
-<h2>Admin page</h2>  </div>
-<a href="/logout">Log Out </a>
-</div>
-@else
 
-@endif
 </html>

@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
 <!--    -------font awesome kit link------->
-    <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous">
+    
+    function back(){
+      window.history.back();
+
+    }
+    </script>
 
     <style>
 @media print {
@@ -338,8 +344,12 @@
     </div>
       <br/><br/>
 
-      <div><button id="printBtn" class="btn btn-primary" onClick="window.print()">Print this Prescription
-    </button></div>
+      <div>
+        <button id="printBtn" class="btn btn-primary" onClick="window.print()">Print this Prescription
+    </button>
+    <button id="back" class="btn btn-primary" onclick="window.history.go(-1); return false;">Go Back
+    </button>
+  </div>
 
       <script src="/js/bootstrap.min.js"></script>
 </body>
