@@ -8,7 +8,7 @@
 
 <!--    ------css link---------->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dochome.css">
 <!--    -------font awesome kit link------->
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -18,333 +18,160 @@
     
 </head>
 
-@if(Session::has('doctor'))
+
 <body>
-<!---------section-1---------->
-<!------top-heading------>
-<div class="container-fluid p-0">
-    <div class="section-1">
-  <div class="container">
-            <div class="row justify-content-end align-items-center">
-            
-            <div class="col-md-6 offset-3">
-                <p style="margin: 0px;">Doctor's Page</p>
-            </div>
-            
-            
-            
-        </div>
-  </div>
-    </div>
-</div>
 
-<!---------bottom heading-------->
-<!---------Navigation-bar----------->
-<div class="container-fluid p-0">
-    <div class="bottom-heading">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-  <div class="container logo-relation">
-  <div class="row align-items-center" style="width: 100%;">
-        <div class="col-md-2">
-              <div class="logo-wrap">
-                  <a class="navbar-brand" href="#">
-                  <img src="icons/logofin.png" alt="">
-              </a>
-              </div>
-          </div>
+  <div class="container">
+    <div class="logo">
+        <img src="/images/logofin.png" alt="LOGO" width="160px" height="60px">
+  
+    </div>
+  
+    <div class="right_container">
+        
+        <div class="bottom">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-top">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-lg-flex align-items-center">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{route('doctorhome')}}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('view_blog') }}">View Blogs</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('blog') }}">Write Blog</a>
+                  </li>
          
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    
-<div class="col-md-12">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      </form>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        
-        
-        <li class="nav-item">
-          <a class="nav-link" href="#">News Feed</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="">View Prescribed Posts</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        
-       
-      </ul>
-      <!-- --------profile section--------   -->
-
-    
-              <div class="profile-wrap">
-                  <div class="name">
-                  <a href="#">
-                   
-                    <p>{{session('doctor')}}</p>
-                
-                  </a>
-            </div>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Notifications
+                    </a>
+          
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                     
+                        @forelse ($users->notifications as $notification)
+                        @if($notification->data['category'] != "FOLLOW UP")
+                        <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+                        @endif
+                        @empty
+                        <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+                       
+                        @endforelse
+                      
+                     
+                    </ul>
+                  </li>
   
-              <div class="profile-photo">
-                
-            @foreach($doc_info as $i)
-            <a href="#"><img width='100px' height='80px' src="/{{ $i->propic }}" alt="profile pic"></a>
-            @endforeach
-             
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Follow Up Notifications
+                    </a>
+          
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                     
+                        @forelse ($users->notifications as $notification)
+                        @if($notification->data['category'] == "FOLLOW UP")
+                        <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+                        @endif
+                        
+                        @empty
+                        <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+                       
+                        @endforelse
+                      
+                     
+                    </ul>
+                  </li>
             
-             
-                
-          </div>
-
-            </div>
-              <a href="/logout">Log Out </a>
-            </div>
-              </div>
-
-              
-     
-  
-   
-      
-      
-      
-      
-      
-      
-      
-     </div> 
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('followups') }}">Follow Ups</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                  </li>
+                   
     
-</div>
-
-   
-   
-   
-   
-   
-    
-    
-  </div>
     
   
-  </div>
-</nav> 
-     
-     
-     
-     
-       
+  <div class="profile-wrap">
+    
+    <div class="photoD">
+  @foreach($doc_info as $i)
+  <a href="#"><img class='photo' width='100px' height='80px' src=/{{ $i->propic }} alt="profile pic"></a>
+  @endforeach
+  
     </div>
-</div>
-
-
-<!--------bottom heading-2------->
-
-<div class="container-fluid p-0">
-    <div class="bottom-heading2" style="background: #d2d2d2">
-    <nav class="navbar navbar-expand-lg navbar-light">
+  
+  
   <div class="container">
-  <div class="row align-items-center" style="width: 100%;">
-          <div class="col-md-3">
-             <form class="d-flex">
-       
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <input type="submit" value="Find" style="background: #9ba2fd;
-    border: 1px solid #6c6cff;
-    color: white;
-    border-radius: 10px;
-    padding: 0px 33px;
-    font-weight: 500;">
-        
-        
-      </form>
-      
-          </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    
-<div class="col-md-9">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        
-<!--
-        <select class="form-select" aria-label="Default select example" style="width: 15%;border-radius: 20px 10px 20px 10px;
-    margin-right: 15px;">
-       <option selected>Set location</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-       </select>
-      
--->
-      
-      
-      
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Hospital</a>
-        </li>
+    <div class="name">
+    <a href="#">
+     
+      <p>{{session('doctor')}}</p>
+      <a href="/logout">Log Out </a>
   
-        <li class="nav-item">
-          <a class="nav-link" href="#">Doctor</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Ambulance</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Drugs and suppliments</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Saved service</a>
-        </li>
-        
-       
-      </ul>
-      <!-- --------profile section--------   -->
-
+    </a>
+  </div>
     
-              <div class="profile-wrap">
-                  <div class="messenger">
-                  <a href="#">
-                      <i class="fab fa-facebook-messenger"></i>
-                  </a>
+  </div>
+  
+  </div>
+  </li>
+  
+  <li>
+    
+  </li>
+                </ul>
+  
+  
+              </div>
             </div>
+          </nav>
   
-              <div class="notification">
-                  <i class="fas fa-bell"></i>
-          </div>
-              </div>
-     
-  
-   
-      
-      
-      
-      
-      
-      
-      
-     </div> 
-    
-</div>
-
-   
-   
-   
-   
-   
-    
-    
-  </div>
-    
-  
-  </div>
-</nav> 
-     
-     
-     
-     
-       
+        </div>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--------------section--2---------->
-
-<div class="container-fluid p-0">
-  <div class="all-body-wrap" style="background: #f3f1f1;
-    padding: 50px 0px;">
-      <div class="container">
-          <div class="body-wrap">
-              <div class="catagory-location">
-                 <div class="row justify-content-end">
-                     <div class="col-md-6">
-                  <form action="">
-                                        <div class="catagory-search">
-                                  <div class="row">
-                           <div class="col-md-6">
-                               <select class="form-select" aria-label="Default select example">
-  <option selected>Search by categories</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
-                           </div>
-                           
-                           <div class="col-md-6">
-                               <select class="form-select" aria-label="Default select example">
-  <option selected>Search by location</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
-                           </div>
-                           
-                           
-                           
-                           
-                           
-                       </div>
-                         
-                           
-                               
-                     </div>
-                  </form>
-                     
-                     
-                     
-                  </div>
-                 </div>
-              </div>
+  </div>
+  
+  
+  
+  
+  
+          
+  
+  
+  
 
 
               <div class="container">
-                <div class="row">
-                  <div class="col-md-6">
+                <div class="col">
+                  <div class="container">
                     @foreach($pdf as $p)
                   <iframe height='600' width='550' src="/{{$p->pdf}}" ></iframe>
   
                   @endforeach
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="container3">
                    
                     @foreach($patient_detail as $x)
                     
-            <span style="font-size: 20pt; font-weight: bold;">Patient Picture: </span><a href="#"><img width='100px' height='80px' src="/{{ $x->propic }}" alt="profile pic"></a><br/>
+            <span style="font-size: 20pt;"><b>Patient Picture:</b> </span><a href="#"><img width='100px' height='80px' src="/{{ $x->propic }}" alt="profile pic"></a><br/>
             
-                    <span style="font-size: 20pt; font-weight: bold;"> Patient ID: {{$x->userid}}</span><br/>
+                    <span style=""> <b>Patient ID:</b> {{$x->userid}}</span><br/>
                         
-                        <span style="font-size: 20pt; font-weight: bold;"> Patient Email: {{$x->email}}</span><br/>
-                        <span style="font-size: 20pt; font-weight: bold;"> Patient Full Name: {{$x->fname}} {{$x->lname}}</span><br/>
-                        <span style="font-size: 20pt; font-weight: bold;"> Patient Age: {{$x->age}}</span><br/>
-                        <span style="font-size: 20pt; font-weight: bold;"> Patient Gender: {{$x->gender}}</span><br/>
-                        <span style="font-size: 20pt; font-weight: bold;"> Patient Phone: {{$x->phone}}</span><br/>
-                        <span style="font-size: 20pt; font-weight: bold;"> Patient BloodGroup: {{$x->bloodgroup}}</span><br/>
+                        <span style=""> <b>Patient Email:</b> {{$x->email}}</span><br/>
+                        <span style=""> <b>Patient Full Name:</b> {{$x->fname}} {{$x->lname}}</span><br/>
+                        <span style=""> <b>Patient Age:</b>{{$x->age}}</span><br/>
+                        <span style=""><b> Patient Gender:</b> {{$x->gender}}</span><br/>
+                        <span style=""><b> Patient Phone: </b>{{$x->phone}}</span><br/>
+                        <span style=""> <b>Patient BloodGroup:</b> {{$x->bloodgroup}}</span><br/>
 
                     @endforeach
                   </div>
@@ -356,10 +183,10 @@
                 
               </div>
 
-              <div class="container">
-                <span style="font-size: 20pt; font-weight: bold;">Patient Picture Uploaded:</span> <br/>
+              <div class="container3">
+                <span style="font-weight: bold;">Patient Picture Uploaded:</span> <br/>
                 @foreach($images as $im)
-                <a href="#"><img width='800px' height='600px' src="/{{ $im->image}}" alt="image pic"></a><br/>
+                <a href="#"><img style="width: 100%; height: 30%;" width='800px' height='600px' src="/{{ $im->image}}" alt="image pic"></a><br/>
                 
                 @endforeach
 
@@ -369,7 +196,7 @@
 
 
 
-
+<div class="container">
 
               <form name="add_pres" id="add_pres">  
                   @csrf
@@ -386,72 +213,74 @@
                 </div>
     
     
-                
+                <div class="container">
+
+                 
                 <div class="table-responsive"> 
                     
-                    <table class="table table-bordered" id="dynamic_table">  
+                  <table class="table table-bordered" id="dynamic_table">  
                         
-                        <thead>
-                            <td><h2>Medicines:</h2></td> 
-                            
-                           
-                        </thead>
-                        <tbody id="med_sec">
-                           
-                             <tr id='med_row'>  
-                            <div class="medicine">
-                                
-                                <td><input type="text" name="name[]" placeholder="Medicine Name" class="form-control name_list" /></td>
-                                <td><input type="text" name="time[]" placeholder="Time" class="form-control time_list" /></td>  
-                                <td><input type="text" name="continue[]" placeholder="Continuation Days" class="form-control continue_list" /></td>  
-                                <td><input type="text" name="intake[]" placeholder="Intake Amount" class="form-control intake_list" /></td>  
-                                <td><textarea name="describe[]" class="form-control" placeholder="Describe"></textarea></td>  
-                            <td><button type="button" name="add_med" id="add_med" class="btn btn-success">+</button></td>  
-
-                          
-                           
-                            </div>
+                    <thead>
+                        <td><h2>Medicines:</h2></td> 
                         
-  
-                        </tr>  
-                        </tbody>
-
-
-                        <thead>
-                            <td><h2>Tests:</h2></td> 
-                        </thead>
-
-                    <tbody id="test_sec">
-                        <tr id="test_row">
-
-                            <div class="test">
-                                
-                                <td><input type="text" name="test_name[]" placeholder="Test Name" class="form-control test_name_list" /></td>
-                                <td><input type="text" name="reason[]" placeholder="Time" class="form-control reason_list" /></td>  
-                                <td><input type="text" name="hospital[]" placeholder="Hospital" class="form-control hospital_list" /></td>  
-                                
-                            <td><button type="button" name="add_test" id="add_test" class="btn btn-success">+</button></td>  
-
-                        </div>
-
-
-                    </tr>
-
-                </tbody>
-
-                <tfoot>
-                    <tr>  
-
-                           <td> <label for="tips">Tips: </label></td>
-                            <td><textarea id="tips" name="tips[]" class="form-control" placeholder="Tips"></textarea></td>  
-
-                            <td><label for="advice">Advice: </label></td>
-                            <td><textarea id="advice" name="advice[]" class="form-control" placeholder="Advice"></textarea></td>  
-                        
-                        </tr>  
                        
-                </tfoot>  
-                    </table>  
+                    </thead>
+                    <tbody id="med_sec">
+                       
+                         <tr id='med_row'>  
+                        <div class="medicine">
+                            
+                            <td><input type="text" name="name[]" placeholder="Medicine Name" class="form-control name_list" /></td>
+                            <td><input type="text" name="time[]" placeholder="Time" class="form-control time_list" /></td>  
+                            <td><input type="text" name="continue[]" placeholder="Continuation Days" class="form-control continue_list" /></td>  
+                            <td><input type="text" name="intake[]" placeholder="Intake Amount" class="form-control intake_list" /></td>  
+                            <td><textarea name="describe[]" class="form-control" placeholder="Describe"></textarea></td>  
+                        <td><button type="button" name="add_med" id="add_med" class="btn btn-success">+</button></td>  
+
+                      
+                       
+                        </div>
+                    
+
+                    </tr>  
+                    </tbody>
+
+
+                    <thead>
+                        <td><h2>Tests:</h2></td> 
+                    </thead>
+
+                <tbody id="test_sec">
+                    <tr id="test_row">
+
+                        <div class="test">
+                            
+                            <td><input type="text" name="test_name[]" placeholder="Test Name" class="form-control test_name_list" /></td>
+                            <td><input type="text" name="reason[]" placeholder="Time" class="form-control reason_list" /></td>  
+                            <td><input type="text" name="hospital[]" placeholder="Hospital" class="form-control hospital_list" /></td>  
+                            
+                        <td><button type="button" name="add_test" id="add_test" class="btn btn-success">+</button></td>  
+
+                    </div>
+
+
+                </tr>
+
+            </tbody>
+
+            <tfoot>
+                <tr>  
+
+                       <td> <label for="tips">Tips: </label></td>
+                        <td><textarea id="tips" name="tips[]" class="form-control" placeholder="Tips"></textarea></td>  
+
+                        <td><label for="advice">Advice: </label></td>
+                        <td><textarea id="advice" name="advice[]" class="form-control" placeholder="Advice"></textarea></td>  
+                    
+                    </tr>  
+                   
+            </tfoot>  
+                </table>  
                     <input type="button" name="submit_pres" id="submit_pres" class="btn btn-info" value="Submit" />  
                 </div>
                 <td><input name="post_id" id="post_id" type="hidden" value="{{$id}}"/></td>
@@ -460,6 +289,10 @@
     
     
              </form>
+
+            </div>
+
+          </div>
 
              
 
@@ -484,7 +317,7 @@
                   $('#add_med').click(function(){  
                       //alert("clicked");
                        i++;  
-                       var str = "<tr id='med_row" +i+"' class='dynamic_added'><td><input type='text' name='name[]' placeholder='Medicine Name' class='form-control name_list' /></td><td><input type='text' name='time[]' placeholder='Time' class='form-control time_list' /></td>  <td><input type='text' name='continue[]' placeholder='Continuation Days' class='form-control continue_list' /></td>  <td><input type='text' name='intake[]' placeholder='Intake Amount' class='form-control intake_list' /></td>  <td><textarea name='describe[]' class='form-control' placeholder='Describe'></textarea></td>  <td><button type='button' name='remove' id=" + i + " class='btn btn-danger btn_remove'>X</button></td></tr>";
+                       var str = "<tr id='med_row" +i+"' class='dynamic_added'><td><input type='text' name='name[]' placeholder='Medicine Name' class='form-control name_list' /></td><td><input type='text' name='time[]' placeholder='Time' class='form-control time_list' /></td>  <td><input type='text' name='continue[]' placeholder='Continuation Days' class='form-control continue_list' /></td>  <td><input type='text' name='intake[]' placeholder='Intake Amount' class='form-control intake_list' /></td>  <td><textarea name='describe[]' class='form-control' placeholder='Describe'></textarea></td>  <td><button type='button' name='remove' id=" + i + " class='btn btn-danger btn_remove'>X</button></td></tr>";    
                        $('#med_sec').append(str);  
                   });  
             
@@ -492,7 +325,7 @@
                 $('#add_test').click(function(){  
                       //alert("clicked");
                        j++;  
-                       var str = " <tr id='test_row" + j + "' class='test_added'><div class='test'> <td><input type='text' name='test_name[]' placeholder='Test Name' class='form-control test_name_list' /></td><td><input type='text' name='reason[]' placeholder='Time' class='form-control reason_list'/></td>  <td><input type='text' name='hospital[]' placeholder='Hospital' class='form-control hospital_list' /></td><td><button class='btn btn-danger test_btns' type='button' name='remove' id=" + j + ">X</button></td> </div></tr>";
+                       var str = " <tr id='test_row" + j + "' class='test_added'><div class='test'> <td><input type='text' name='test_name[]' placeholder='Test Name' class='form-control test_name_list' /></td><td><input type='text' name='reason[]' placeholder='Time' class='form-control reason_list'/></td>  <td><input type='text' name='hospital[]' placeholder='Hospital' class='form-control hospital_list' /></td><td><button class='btn btn-danger test_btns' type='button' name='remove' id=" + j + ">X</button></td> </div></tr>";  
                        $('#test_sec').append(str);  
                   });  
                 
@@ -659,5 +492,5 @@
 <script src="/js/bootstrap.min.js"></script>
 
 </body>
-@endif
+
 </html>

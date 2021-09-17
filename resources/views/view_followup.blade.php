@@ -34,6 +34,7 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-lg-flex align-items-center">
+                  @if(session('patient'))
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{route('home')}}">Home</a>
                   </li>
@@ -54,6 +55,67 @@
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                   </li>
+                  @else
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{route('doctorhome')}}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('blog') }}">Write Blog</a>
+                  </li>
+         
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Notifications
+                    </a>
+          
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                     
+                        @forelse ($users->notifications as $notification)
+                        @if($notification->data['category'] != "FOLLOW UP")
+                        <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+                        @endif
+                        @empty
+                        <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+                       
+                        @endforelse
+                      
+                     
+                    </ul>
+                  </li>
+  
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Follow Up Notifications
+                    </a>
+          
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                     
+                        @forelse ($users->notifications as $notification)
+                        @if($notification->data['category'] == "FOLLOW UP")
+                        <li><a href="{{url('doctorhome/deletenotification/'.$notification->id)}}" class="dropdown-item" href="#">{{"Patient With ID ".$notification->data['id'].$notification->data['message']}}{{" on category "}}{{$notification->data['category']}}</a></li>
+                        @endif
+                        
+                        @empty
+                        <li><a class="dropdown-item" href="#">No Notifications :(</a></li>
+                       
+                        @endforelse
+                      
+                     
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+  
+                    <a class="nav-link" href="">View Prescribed Posts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('followups') }}">Follow Ups</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                  </li>
+                  @endif
   <li>
     
     
@@ -61,9 +123,16 @@
   <div class="profile-wrap">
     
     <div class="photoD">
-  @foreach($info as $i)
-  <a href="#"><img class='photo' width='100px' height='80px' src=/{{ $i->propic }} alt="profile pic"></a>
-  @endforeach
+      @if(session('doctor'))
+      @foreach($doc_info as $i)
+      <a href="#"><img class='photo' width='100px' height='80px' src=/{{ $i->propic }} alt="profile pic"></a>
+      @endforeach
+      @else
+      @foreach($info as $i)
+      <a href="#"><img class='photo' width='100px' height='80px' src=/{{ $i->propic }} alt="profile pic"></a>
+      @endforeach
+      @endif
+  
   
     </div>
   

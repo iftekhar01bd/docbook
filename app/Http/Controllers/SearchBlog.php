@@ -53,7 +53,7 @@ class SearchBlog extends Controller
             <label for="title"><b>Blog Title:</b> </label><p>'.$row->title.'</p> <br>
             <label for="content" style="align-items: center;"><b>Blog Content:</b> </label><br><span>'.$row->content.'</span>
            <br><br>
-            <a class="btn-primary btn-lg" href="'.'viewblog/viewcomments/'.$row->id.'"'.'>Comments</a>
+            <a class="btn-primary btn-lg" href="'.'/viewblog/viewcomments/'.$row->id.'"'.'>Comments</a>
 
     </div>
     <br><br>

@@ -47,7 +47,7 @@ class SearchPost extends Controller
                     <div class="card">
                     <h5 class="card-header">User ID:'.$p->userid.'</h5>'.
        '<h7 class="card-header">Date and Time: '.Carbon::parse($row->created_at)->toDayDateTimeString().'</h7>'.
-       '<h7 class="card-header">Gender: '.$p->gender.'</h7>'.
+       '<h7 class="card-header">Gender: '.ucwords($p->gender).'</h7>'.
       '<div class="card-body">
         <h5 class="card-title">Category: '.$row->problem_type.'</h5>
         <p class="card-text ellipsis">'.$row->details.'</p>
@@ -70,7 +70,7 @@ class SearchPost extends Controller
                     <div class="card">
                     <h5 class="card-header">Name: '.$p->fname.' '.$p->lname.'</h5>'.
        '<h7 class="card-header">Date and Time: '.Carbon::parse($row->created_at)->toDayDateTimeString().'</h7>'.
-       '<h7 class="card-header">Gender: '.$p->gender.'</h7>'.
+       '<h7 class="card-header">Gender: '.ucwords($p->gender).'</h7>'.
       '<div class="card-body">
         <h5 class="card-title">Category: '.$row->problem_type.'</h5>
         <p class="card-text ellipsis">'.$row->details.'</p>

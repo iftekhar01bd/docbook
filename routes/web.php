@@ -149,13 +149,15 @@ Route::get('home/consultation', function(){
 Route::get('/home/viewpost/{id}', function($id){
     $se = session('doctor');
     
+    $user_id = Doctor::where('email', $se)->first()->id;
+    $users = Doctor::find($user_id);
 
     $post_info = DB::select("select * from med_posts where id='$id'");
 
         $doc_info = DB::select("select * from doctors where email='$se'");
         $patient_info = DB::select("select * from patients");
 
-    return view('viewpost',  ['post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
+    return view('viewpost',  ['users' => $users, 'post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
 })->name('view_post');
 
 Route::get('/home/viewpost/give/{id}', function($id){
@@ -192,8 +194,10 @@ Route::get('/home/viewpost/give/{id}', function($id){
         return redirect("/home/viewpost/".$id)->with('msg', "Prescription already given...");
     }
 
+    $user_id = Doctor::where('email', $se)->first()->id;
+    $users = Doctor::find($user_id);
 
-    return view('prescription',  ['images' => $images, 'pat_email'=>$e, 'patient_detail' => $patient_detail, 'pdf' => $pdf, 'id' => $id, 'post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
+    return view('prescription',  ['users' => $users, 'images' => $images, 'pat_email'=>$e, 'patient_detail' => $patient_detail, 'pdf' => $pdf, 'id' => $id, 'post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
  
 })->name('give_pres');
 
@@ -211,16 +215,20 @@ Route::get('home/followups', function(){
 
     if(session()->has('patient')){
         $se = session('patient');
-        
+        $user_id = Doctor::where('email', $se)->first()->id;
+       $users = Doctor::find($user_id);
+
         $follows = DB::select("select * from follow_ups where p_email='$se'");
         $patient_info = DB::select("select * from patients");
-        return view('followup', ['info' => $info, 'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
+        return view('followup', ['users' => $users, 'info' => $info, 'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
     }else{
         $info = DB::select("select * from doctors where email='$se'");
         $se = session('doctor');
+        $user_id = Doctor::where('email', $se)->first()->id;
+       $users = Doctor::find($user_id);
         $doc_info = DB::select("select * from doctors where email='$se'");
         $follows = DB::select("select * from follow_ups where d_email='$se'");
-        return view('followup', ['info' => $info, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
+        return view('followup', ['users' => $users, 'info' => $info, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
     }
   
 })->name('followups');
@@ -255,10 +263,12 @@ Route::get('home/view_doctors/rate/{patientid}/{doctorid}/{rate}', [RateControll
 
 Route::get('home/blog', function(){
     $se = session('doctor');
-    $info = DB::select("select * from patients where email='$se'");
-    $docs = DB::select("select * from doctors");
+    $info = DB::select("select * from patients");
+    $docs = DB::select("select * from doctors where email='$se'");
+    $user_id = Doctor::where('email', $se)->first()->id;
+       $users = Doctor::find($user_id);
 
-    return view("writeblog", ['doc_info' => $docs, 'info' => $info, 'docs' => $docs, 'doctor_email' => $se]);
+    return view("writeblog", ['users' => $users, 'doc_info' => $docs, 'info' => $info, 'docs' => $docs, 'doctor_email' => $se]);
 })->name('blog');
 
 
@@ -975,13 +985,18 @@ Route::get('/viewblog/viewcomments/{id}', function($id){
  
  $info = DB::select("select * from patients where email='$email'");
     //dd($user);
+    $user_id = ""; $users = "";
     if(session()->has('patient')){
         $email = session('patient');
         $user = DB::select("select email from patients where email='$email'");
         //dd($user);
     }else if(session()->has('doctor')){
+        $se = session('doctor');
+    $user_id = Doctor::where('email', $se)->first()->id;
+        $users = Doctor::find($user_id);
         $email = session('doctor');
         $user = DB::select("select email from doctors where email='$email'");
+        $doc_info = DB::select("select * from doctors where email='$email'");
         //dd($user);
     }else{
 
@@ -990,7 +1005,7 @@ Route::get('/viewblog/viewcomments/{id}', function($id){
 
     $comments = DB::select("select * from comments where blog_id='$id' order by created_at desc");
 
-    return view("comment", ['info' => $info, 'blogs' => $blogs, 'comments'=> $comments, 'user' => $user]);
+    return view("comment", ['users' => $users, 'doc_info' => $doc_info, 'info' => $info, 'blogs' => $blogs, 'comments'=> $comments, 'user' => $user]);
 
 });
 
@@ -1013,11 +1028,12 @@ Route::get('home/view_followup/{id}', function($id){
     }else{
         $se = session('doctor');
         $info = DB::select("select * from patients where email='$se'");
-
+        $user_id = Doctor::where('email', $se)->first()->id;
+        $users = Doctor::find($user_id);
         $userType = "D";
         $doc_info = DB::select("select * from doctors where email='$se'");
         $follows = DB::select("select * from follow_ups where id='$id'");
-        return view('view_followup', ['info' => $info, 'type' => $userType, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
+        return view('view_followup', ['users' => $users, 'info' => $info, 'type' => $userType, 'email' => $se, 'follows' => $follows, 'doc_info' => $doc_info]);
     }
 
 });
