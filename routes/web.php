@@ -21,8 +21,13 @@ use App\Http\Controllers\SearchPost;
 use App\Http\Controllers\PostMessage;
 use App\Models\Blog;
 
+use App\Models\Patient;
 use App\Models\Doctor;
-
+use App\Models\SpecialistDoctor;
+use App\Models\MedPost;
+use App\Models\S_Post;
+use App\Models\S_Prescription;
+use App\Models\PostStatus;
 
 Route::get('/c',function(){
 
@@ -67,10 +72,19 @@ Route::get('/home', function () {
 
         return view('home', ['info' => $info, 'blogs' => $blogs]);
     } else if(session()->has('specialist')){
+     return redirect('/s_home');
+        /*
         $se = session('specialist');
-        $info = DB::select("select * from specialist_doctors where email='$se'");
+        $post_info = DB::select("select * from med_posts order by id desc");
+        
+        $doc_info = DB::select("select * from specialist_doctors where email='$se'");
+        $patient_info = DB::select("select * from patients");
+        $user_id = SpecialistDoctor::where('email', $se)->first()->id;
+        $users = SpecialistDoctor::find($user_id);
 
-        return view('home', ['info' => $info]);
+
+        return view('s_home', ['users' => $users, 'post_info' => $post_info, 'doc_info'=>$doc_info, 'patient_info' => $patient_info]);
+   */
     } else if(session()->has('admin')){
         $se = session('admin');
         $info = DB::select("select * from admins where email='$se'");
@@ -215,8 +229,8 @@ Route::get('home/followups', function(){
 
     if(session()->has('patient')){
         $se = session('patient');
-        $user_id = Doctor::where('email', $se)->first()->id;
-       $users = Doctor::find($user_id);
+        $user_id = Patient::where('email', $se)->first()->id;
+       $users = Patient::find($user_id);
 
         $follows = DB::select("select * from follow_ups where p_email='$se'");
         $patient_info = DB::select("select * from patients");
@@ -757,8 +771,17 @@ Route::get('home/smart_attestation/{id}', function($id){
    // echo $string;
 
    // $string = "";
+   $found = PostStatus::all()->where('post_id', (int)$id);
 
-    return view('smart_attestation',  ['info' => $info, 'id_p' => $id_p, 'chosen_ids' => $chosen_ids, 'detail1_t' => $detail1_t, 'detail2_t' => $detail2_t, 'detail3_t' => $detail3_t, 'detail1' => $detail1, 'detail2' => $detail2, 'detail3' => $detail3, 'recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
+   if(count($found) == 0){
+    $post_status = "unassigned";
+   }else{
+    $post_status = PostStatus::all()->where('post_id', (int)$id)->first()->status;
+   }
+  
+   
+
+    return view('smart_attestation',  ['post_status' => $post_status, 'info' => $info, 'id_p' => $id_p, 'chosen_ids' => $chosen_ids, 'detail1_t' => $detail1_t, 'detail2_t' => $detail2_t, 'detail3_t' => $detail3_t, 'detail1' => $detail1, 'detail2' => $detail2, 'detail3' => $detail3, 'recommend' => $recommend_specialist, 'patient_info' => $patient_info,'string' => $result, 'post_info' => $post_info, 'prescriptions' => $prescriptions]);
     
 })->name('smart_attestation');
 
@@ -1038,3 +1061,342 @@ Route::get('home/view_followup/{id}', function($id){
 
 });
 Route::post('home/post_message', [PostMessage::class, 'postMessage']);
+
+// SPECIALIST CODES
+Route::get('/s_home', function () {
+    if(session()->has('specialist')){
+        $se = session('specialist');
+        $s_id = SpecialistDoctor::where('email', $se)->first()->id;
+        //echo $s_id;
+        $post_s = S_Post::where('specialist_id', $s_id)->get();
+        $ids = [];
+
+        
+        foreach($post_s as $p){
+            if(PostStatus::where('post_id', $p->post_id)->first()->status != 'done'){
+                array_push($ids, $p->post_id);
+            }else{
+                
+            }
+            
+        }
+
+    
+
+        $post_info = MedPost::whereIn('id', $ids)->get();
+        foreach($post_info as $x){
+            //echo $x->id;
+        }
+        
+        
+        $doc_info = DB::select("select * from specialist_doctors where email='$se'");
+        $patient_info = DB::select("select * from patients");
+        $user_id = SpecialistDoctor::where('email', $se)->first()->id;
+        $users = SpecialistDoctor::find($user_id);
+
+
+        return view('s_home', ['users' => $users, 'post_info' => $post_info, 'doc_info'=>$doc_info, 'patient_info' => $patient_info]);
+    
+    }else{
+        return view('login');
+    }
+
+    
+})->name('s_home');
+
+
+Route::get('home/recommend_s/{post_id}', function($post_id){
+
+    $s_doc = SpecialistDoctor::all();
+
+    $post = MedPost::find((int)$post_id);
+    $field = $post->problem_type;
+    $assigned_doc = "";
+
+    if($field == "Uncategorized"){
+        $assigned_doc = SpecialistDoctor::all()->random(1)->first;
+    }else{
+        $assigned_doc = SpecialistDoctor::where('field', $field)->get()->random(1)->first();
+
+
+    }
+
+   // return $assigned_doc->fname;
+
+
+    S_Post::insert([
+        'post_id' => $post_id,
+        'specialist_id' => $assigned_doc->id
+
+    ]);
+
+    PostStatus::insert([
+        'post_id' => $post_id,
+        'status' => 'assigned'
+
+    ]);
+
+
+    $se = session('patient');
+    $info = DB::select("select * from patients where email='$se'");
+    
+
+    $post_info = DB::select("select * from med_posts where patient_email='$se'");
+
+      
+    $patient_info = DB::select("select * from patients where email='$se'");
+    echo "<html><script>alert('Your post has been assigned to a specialist');</script></html>";
+
+    return view('view_prescriptions',  ['info' => $info, 'post_info' => $post_info, 'patient_info' => $patient_info]);
+
+
+
+
+
+
+/*
+
+    foreach($s_doc as $s){
+        if($s->field){
+
+        }
+    }
+*/
+
+
+});
+
+Route::post('s_home/special_suggestion', function(Request $request){
+    /*
+    echo request()->sug."\n";
+    echo request()->specialist_id."\n";
+    echo request()->post_id."\n";
+    echo request()->pres_id."\n";
+*/
+   
+    S_Prescription::insert([
+        'post_id' => request()->post_id,
+        'specialist_id' => request()->specialist_id,
+        'prescription_id' => request()->pres_id,
+        'comment' => request()->sug
+    ]);
+
+   PostStatus::where('post_id', request()->post_id)->update(['status' => 'done']);
+
+    echo "<html><script>alert('Successfully given feedback to the patient');</script></html>";
+
+
+    return redirect(route('s_home'));
+
+
+
+})->name('special_suggestion');
+
+Route::get('s_home/specialist_post/{post_id}', function($id){
+
+
+    $se = session('specialist');
+    $post_info = DB::select("select * from med_posts where id='$id'");
+    $post_info = $post_info[0];
+
+    $patient_info = DB::select("select * from patients");
+    $doc_info = DB::select("select * from specialist_doctors where email='$se'");   
+    $pdf = DB::select("select pdf from med_posts where id='$id'");
+   
+    $pat_email =  DB::select("select patient_email from med_posts where id='$id'");
+    $e = $pat_email[0]->patient_email;
+    //print_r();
+    $images =  DB::select("select image from med_posts where id='$id'");
+
+    
+    $patient_detail = DB::select("select * from patients where email='$e'");
+
+    
+    
+    $user_id = SpecialistDoctor::where('email', $se)->first()->id;
+    $users = SpecialistDoctor::find($user_id);
+
+    /* PRECRIPTION CODE AGAIN
+
+    */
+
+    $prescriptions = DB::select("select * from prescriptions where post_id='$id'");
+    
+    $pres = [];
+    $pres_ids = [];
+    
+    $index = 0;
+    foreach($prescriptions as $p){
+        array_push($pres, $p->information);
+        array_push($pres_ids, $p->id);
+
+    }
+    
+    $p1=$pres[0]; $p2=$pres[1]; $p3=$pres[2];
+
+    
+
+    $detail1 = convertPrescription("1", $p1); $detail2 = convertPrescription("2", $p2); $detail3 = convertPrescription("3", $p3);
+   
+    $detail1_t = convertPrescription_t("1", $p1);
+    $detail2_t = convertPrescription_t("2", $p2);
+    $detail3_t = convertPrescription_t("3", $p3);
+
+   //print_r($detail1);
+  // print_r($detail2);
+
+//print_r($detail3);
+
+
+
+    
+
+    $string = [];
+    $name = [];
+
+    $p1 = explode('#', $p1);
+    $name = $p1[0];
+    if(strpos($name, '|')){
+        $name = explode('|', $name);
+    }
+    if(is_array($name)){
+        $name = implode(' ', $name);
+    }
+   
+
+    $index = 0;
+    foreach($p1 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+
+    $string = implode(' ', $string);
+    //echo $string;
+
+    $string2 =[];
+    $name2 = [];
+    $p2 = explode('#', $p2);
+    $name2 = $p2[0];
+    if(strpos($name2, '|')){
+        $name2 = explode('|', $name2);
+    }
+    if(is_array($name2)){
+        $name2 = implode(' ', $name2);
+    }
+    
+
+    $index = 0;
+    foreach($p2 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string2, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string2, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+   
+    $string2 = implode(' ', $string2);
+    //echo $string2;
+    
+    $string3 = [];
+    $name3 = [];
+    $p3 = explode('#', $p3);
+    $name3 = $p3[0];
+    if(strpos($name3, '|')){
+        $name3 = explode('|', $name3);
+    }
+    if(is_array($name3)){
+        $name3 = implode(' ', $name3);
+    }
+    
+
+    $index = 0;
+    foreach($p3 as $cols){
+        if($index <= 4){
+            if(strpos($cols, "|")){
+                $l = explode('|', $cols);
+                
+                foreach($l as $L){
+                    array_push($string3, $L);
+                    
+                }
+                $index += 1;
+            }else{
+            array_push($string3, $cols);
+            $index += 1;
+            }
+        }
+        
+    }
+
+    $string3 = implode(' ', $string3);
+
+   // echo $string."<br>"; echo $string2."<br>"; echo $string3."<br>";
+
+    $p1_p2 = docbook_prescription_comparisonWinkler($string, $string2 , 0.1, 80);
+    $name1_2 = docbook_prescription_comparisonWinkler($name, $name2 , 0.1, 80);
+
+    $p1_p3 = docbook_prescription_comparisonWinkler($string, $string3 , 0.1, 80);
+    $name1_3 = docbook_prescription_comparisonWinkler($name, $name3 , 0.1, 80);
+
+    $p2_p3 = docbook_prescription_comparisonWinkler($string2, $string3, 0.1, 80);
+    $name2_3 = docbook_prescription_comparisonWinkler($name2, $name3 , 0.1, 80);
+
+    $name_high = max($name1_2, $name1_3, $name2_3);
+    $recommend_specialist = "";
+/*
+    echo $name."<br>"; echo $name2."<br>"; echo $name3."<br>";
+    echo $name1_2."<br>";
+    echo $name1_3."<br>";; echo $name2_3."<br>";;
+   echo $name_high;
+*/
+    if($name_high < 95){
+        $recommend_specialist = "YES";
+    }else{
+        $recommend_specialist = "NO";
+    }
+
+
+    $result = [];
+
+    $choose = max($p1_p2, $p1_p3, $p2_p3);
+    $chosen_ids = [];
+    if($choose == $p1_p2){
+        array_push($chosen_ids, $pres_ids[0], $pres_ids[1]);
+
+    }else if($choose == $p1_p3){
+        array_push($chosen_ids, $pres_ids[0], $pres_ids[2]);
+    }else{
+        array_push($chosen_ids, $pres_ids[1], $pres_ids[2]);
+    }
+
+    $id_p = $id;
+    $special_id = SpecialistDoctor::where('email', $se)->first()->id;
+
+    return view('prescription',  ['special_id' => $special_id, 'id_p' => $id_p, 'chosen_ids' => $chosen_ids, 'users' => $users, 'images' => $images, 'pat_email'=>$e, 'patient_detail' => $patient_detail, 'pdf' => $pdf, 'id' => $id, 'post_info' => $post_info, 'doc_info' => $doc_info, 'patient_info'=>$patient_info]);
+
+
+
+});

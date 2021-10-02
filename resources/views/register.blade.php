@@ -47,7 +47,6 @@
         }else if(user == "specialist"){
             $("#blood").hide();
             $('#doc_div').show();
-            $('#spec_div').show();
             $("#email").show();
             $("#password").show();
             $("#fname").show();
@@ -128,7 +127,10 @@
             $("#name").show();
             $("#gender").show();
             $("#age").show();
-            $('#bmdc').show();
+            $('#bmdc').hide();
+            $("#special").hide();
+            $('#s_l').hide();
+            $('#b_l').hide();
 
 
         }else if(user == "admin"){
@@ -183,7 +185,7 @@
       <div class="container" name="doc_div" id="doc_div">
       <label>Home Address</label>
       <input type="text" id="homeaddress" class="fadeIn third" name="homeaddress" placeholder="">
-      <label>Speciality</label>
+      <label id='s_l'>Speciality</label>
       <input type="text" id="special" class="fadeIn third" name="special" placeholder="">
       <label>Chamber Address</label>
       <input type="text" id="chamberaddress" class="fadeIn third" name="chamberaddress" placeholder="">
@@ -193,17 +195,20 @@
       <input type="text" id="nidno" class="fadeIn third" name="nidno" placeholder="">
       <label>Medical College: </label>
       <input type="text" id="medcollege" class="fadeIn third" name="medcollege" placeholder="">
-      <label>Graduation Year: </label>
-      <input type="number" id="gradyear" class="fadeIn third" name="gradyear" placeholder="">
-      <label>BMDC Number: </label>
+      <label>Graduation Year: </label><br>
+      <input type="number" id="gradyear" class="fadeIn third" name="gradyear" placeholder=""><br>
+      <label id="b_l">BMDC Number: </label>
       <input type="text" id="bmdc" class="fadeIn third" name="bmdc" placeholder="">
-      <label>Experience: </label>
-      <input type="number" id="experience" class="fadeIn third" name="experience" placeholder="">
+      <label>Experience: </label><br>
+      <input type="number" id="experience" class="fadeIn third" name="experience" placeholder=""><br>
       <label>Degree Acomplishments: </label>
       <input type="text" id="degree" class="fadeIn third" name="degree" placeholder=""><br>
       <div name="spec_div" id="spec_div">
+
       <label>Medical Field</label>
       <input type="text" id="field" class="fadeIn third" name="field" placeholder="">
+      <label>License Number</label>
+      <input type="text" id="license" class="fadeIn third" name="license" placeholder="">
       </div>
       
       </div><br>

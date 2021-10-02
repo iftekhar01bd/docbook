@@ -13,7 +13,6 @@
     
     
     
-    
 </head>
 <body>
 <!---------section-1---------->
@@ -70,8 +69,7 @@
 @endforeach
 
   </div>
-
-
+  
 <div class="container">
   <div class="name">
   <a href="#">
@@ -82,12 +80,15 @@
   </a>
 </div>
   
+
 </div>
 
 </div>
+
 </li>
 
 <li>
+  <div style="text-align:center;padding:1em 0;"> <h4><a style="text-decoration:none;" href="https://www.zeitverschiebung.net/en/country/bd"><span style="color:gray;">DocBook Time, </span><br />Bangladesh</a></h4> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FDhaka" width="100%" height="90" frameborder="0" seamless></iframe> </div>
   
 </li>
               </ul>
@@ -181,9 +182,23 @@
 
 </div>
 
+<div class="bottomDisplay">
+<div class="weather">
+  <iframe src="https://www.meteoblue.com/en/weather/widget/three/dhaka_bangladesh_1185241?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&layout=image"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 460px; height: 593px"></iframe><div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/en/weather/week/dhaka_bangladesh_1185241?utm_source=weather_widget&utm_medium=linkus&utm_content=three&utm_campaign=Weather%2BWidget" target="_blank"></a></div>
 
 
+</div>
 
+<div class="chat_box">
+  <iframe
+    allow="microphone;"
+    width="350"
+    height="430"
+    src="https://console.dialogflow.com/api-client/demo/embedded/d89bf719-09fe-4374-8e8b-5bdcf09d6ec8">
+</iframe>
+</div>
+
+</div>
 
 
 
@@ -273,6 +288,8 @@
    });
   });
   </script>
+
+
   
 
 </body>

@@ -100,7 +100,29 @@
               @foreach($post_info as $i)
               <div class="card">
                 @if($recommend == "YES")
-                 <h3> Recommend Specialist</h3>
+                 <h4> Doctors prescriptions similarity was not good enough.</h4>
+                
+                @if($post_status == "assigned")
+                    <h3> Waiting for Specialist to give feedback . . .
+                @elseif($post_status == "done")
+                  <h3> Specialist Feedback recieved: </h3>
+  
+                  @foreach($chosen_ids as $id)
+                  <a class="btn btn-primary" href="/home/viewPDF/{{$id_p}}/{{$id}}">View Prescription {{$id}} </a>
+                  @endforeach
+                 <hr>
+                  <h4>Choose This Prescription : Prescription {{App\Models\S_Prescription::where('post_id', $i->id)->first()->prescription_id}}</h4> <br>
+                 <h4> Suggestion from Specialist:</h4> <br>
+  
+                 <h5> {{App\Models\S_Prescription::where('post_id', $i->id)->first()->comment}} <br></h5>
+  
+                  <br>
+                @else
+                <h3> Recommend Specialist?</h3>
+                    <a class="btn btn-primary btn-lg" href="/home/recommend_s/{{$i->id}}">Agree!</a>
+                @endif
+               
+      
                 @else
                 @foreach($string as $s)
                 <h4>{{$s}}</h4>
