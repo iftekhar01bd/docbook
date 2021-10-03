@@ -177,6 +177,13 @@
 
                     @endforeach
                   </div>
+
+                  <div class="container3">
+                    
+                    <span style=""> <b>Post Problem Type:</b> {{$post_info->problem_type}}</span><br/>
+                    <span style=""> <b>Post Details: </b> {{$post_info->details}}</span><br/>
+                    
+                  </div>
                 </div>
 
                 
@@ -629,6 +636,14 @@
                         <span style=""> <b>Patient BloodGroup:</b> {{$x->bloodgroup}}</span><br/>
 
                     @endforeach
+                  </div>
+
+
+                  <div class="container3">
+                    
+                    <span style=""> <b>Post Problem Type:</b> {{$post_info->problem_type}}</span><br/>
+                    <span style=""> <b>Post Details: </b> {{$post_info->details}}</span><br/>
+                    
                   </div>
                 </div>
 
