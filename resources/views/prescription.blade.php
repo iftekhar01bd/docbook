@@ -96,7 +96,7 @@
                     <a class="nav-link" href="{{ route('followups') }}">Follow Ups</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{{route('about')}}">About</a>
                   </li>
                    
     
@@ -556,7 +556,7 @@
             
                 
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{{route('about')}}">About</a>
                   </li>
                    
     

@@ -25,10 +25,7 @@ class PostPrescription extends Controller
 
         }
 
-        foreach($request->input('test_name') as $key => $value) {
-            $rules["test_name.{$key}"] = 'required';
-            
-        }
+      
 
 
 

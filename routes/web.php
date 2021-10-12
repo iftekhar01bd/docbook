@@ -230,14 +230,16 @@ Route::get('home/followups', function(){
     if(session()->has('patient')){
         $se = session('patient');
         $user_id = Patient::where('email', $se)->first()->id;
+       
        $users = Patient::find($user_id);
-
+   
         $follows = DB::select("select * from follow_ups where p_email='$se'");
-        $patient_info = DB::select("select * from patients");
+        $patient_info = DB::select("select * from patients where email='$se'");
         return view('followup', ['users' => $users, 'info' => $info, 'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
     }else{
-        $info = DB::select("select * from doctors where email='$se'");
+       
         $se = session('doctor');
+        $info = DB::select("select * from doctors where email='$se'");
         $user_id = Doctor::where('email', $se)->first()->id;
        $users = Doctor::find($user_id);
         $doc_info = DB::select("select * from doctors where email='$se'");
@@ -1012,6 +1014,7 @@ Route::get('/viewblog/viewcomments/{id}', function($id){
     if(session()->has('patient')){
         $email = session('patient');
         $user = DB::select("select email from patients where email='$email'");
+        $doc_info = DB::select("select * from doctors");
         //dd($user);
     }else if(session()->has('doctor')){
         $se = session('doctor');
@@ -1046,11 +1049,12 @@ Route::get('home/view_followup/{id}', function($id){
         $userType = "P";
 
         $follows = DB::select("select * from follow_ups where id='$id'");
-        $patient_info = DB::select("select * from patients");
+        $patient_info = DB::select("select * from patients where email='$se'");
         return view('view_followup', ['info' => $info, 'type' => $userType,'email' => $se, 'follows' => $follows, 'patient_info' => $patient_info]);
     }else{
         $se = session('doctor');
-        $info = DB::select("select * from patients where email='$se'");
+
+        $info = DB::select("select * from patients");
         $user_id = Doctor::where('email', $se)->first()->id;
         $users = Doctor::find($user_id);
         $userType = "D";
@@ -1400,3 +1404,73 @@ Route::get('s_home/specialist_post/{post_id}', function($id){
 
 
 });
+
+
+Route::get('home/appt', function(){
+    if(session()->has('doctor')){
+        $se = session('doctor');
+        $info = DB::select("select * from doctors where email='$se'");
+        return view('appt', ['info' => $info]);
+    } else if(session()->has('patient')){
+        $se = session('patient');
+        $info = DB::select("select * from patients where email='$se'");
+        //echo $info;
+        $blogs = Blog::all()->sortByDesc('created_at');
+
+        return view('appt', ['info' => $info, 'blogs' => $blogs]);
+    } else if(session()->has('specialist')){
+     return redirect('/s_home');
+        /*
+        $se = session('specialist');
+        $post_info = DB::select("select * from med_posts order by id desc");
+        
+        $doc_info = DB::select("select * from specialist_doctors where email='$se'");
+        $patient_info = DB::select("select * from patients");
+        $user_id = SpecialistDoctor::where('email', $se)->first()->id;
+        $users = SpecialistDoctor::find($user_id);
+
+
+        return view('s_home', ['users' => $users, 'post_info' => $post_info, 'doc_info'=>$doc_info, 'patient_info' => $patient_info]);
+   */
+    } else if(session()->has('admin')){
+        $se = session('admin');
+        $info = DB::select("select * from admins where email='$se'");
+
+        return view('appt', ['info' => $info]);
+    } else if(session()->has('hospital_admin')){
+        $se = session('hospital_admin');
+        $info = DB::select("select * from hospital_admins where email='$se'");
+
+        return view('hospitalad', ['info' => $info]);
+    }else{
+        return view('login');
+    }
+
+})->name('appt');
+
+
+Route::get('/about', function () {
+    if(session()->has('doctor')){
+        $se = session('doctor');
+        $info = DB::select("select * from doctors where email='$se'");
+        return view('about', ['info' => $info]);
+    } else if(session()->has('patient')){
+        $se = session('patient');
+        $info = DB::select("select * from patients where email='$se'");
+
+
+        return view('about', ['info' => $info]);
+    } else if(session()->has('specialist')){
+        $se = session('specialist');
+        $info = DB::select("select * from specialist_doctors where email='$se'");
+
+        return view('about', ['info' => $info]);
+
+       
+    }
+    else{
+
+    }
+
+    
+})->name('about');

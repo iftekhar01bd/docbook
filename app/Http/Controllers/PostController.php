@@ -19,18 +19,29 @@ class PostController extends Controller
 
         $validated = $request->validate([
             'details' => 'required|max:1000',
-            'post_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:11048',
-            'pdf'=> 'mimes:pdf|max:100000',
         ]);
+
+        if($request->hasFile('post_img')){
+            $imageName = time().'.'.$request->post_img->extension();  
+            $request->post_img->move(public_path('patient_post_images'), $imageName);
+        }else{
+            $imageName = 'noimage.png';
+
+        }
+
+        if($request->hasFile('pdf')){
+            $pdfName = time().'.'.$request->pdf->extension();  
+        $request->pdf->move(public_path('patient_post_pdfs'), $pdfName);
+        }else{
+            $pdfName = "nopdf.pdf";
+        }
 
         $d = MedPost::all();
         $f = FollowUp::all();
 
-        $imageName = time().'.'.$request->post_img->extension();  
-        $request->post_img->move(public_path('patient_post_images'), $imageName);
+       
 
-        $pdfName = time().'.'.$request->pdf->extension();  
-        $request->pdf->move(public_path('patient_post_pdfs'), $pdfName);
+        
 
 
         if($request->problemtype == "FOLLOW UP"){

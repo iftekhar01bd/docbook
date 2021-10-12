@@ -53,9 +53,13 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('followups') }}">FOLLOW UPS</a>
                 </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('appt') }}">Book Appointment</a>
+                </li>
                 
                 <li class="nav-item">
-                  <a class="nav-link" href="#">About</a>
+                  <a class="nav-link" href="{{ route('about') }}">About</a>
                 </li>
 <li>
   
