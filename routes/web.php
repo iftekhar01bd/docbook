@@ -19,6 +19,10 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SearchBlog;
 use App\Http\Controllers\SearchPost;
 use App\Http\Controllers\PostMessage;
+use App\Http\Controllers\TestController;
+
+use App\Models\Test;
+use App\Models\HospitalTest;
 use App\Models\Blog;
 
 use App\Models\Patient;
@@ -1474,3 +1478,61 @@ Route::get('/about', function () {
 
     
 })->name('about');
+
+Route::get('/send_test',  [TestController::class, 'send'])->name('send_test');
+
+Route::get('/admin_test', function(){
+
+    
+    $prescriptions = DB::select("select * from prescriptions");
+
+    $tests = [];
+    $index = 1;
+
+    Test::truncate();
+
+    foreach($prescriptions as $p){
+        if(HospitalTest::where('id', $index)->first() != null){
+            $index += 1;
+
+        }else{
+            $pat_email = $p->patient_email;
+            $doc_email = $p->doctor_email;
+            
+            $test_name = explode('#', $p->information)[5];
+            $test_time = explode('#', $p->information)[6];
+            $hospital = explode('#', $p->information)[7];
+           
+    
+    
+            array_push($tests, ['id' => $index, 'patient_email' => $pat_email, 'doctor_email' => $doc_email, 'test_name' => $test_name, 'test_time' => $test_time, 'hospital' => $hospital]);
+            Test::insert([
+      
+                'patient_email' => $pat_email,
+                'doctor_email' => $doc_email,
+                'test_name' => $test_name,
+                'time' => $test_time,
+                'hospital' => $hospital
+    
+            ]);
+            $index += 1; 
+        }
+        
+    }
+
+    return view('test_admin', ['tests' => $tests]);
+    
+
+})->name('admin_test');
+
+
+Route::get('/hp_test', function(){
+
+    
+    $tests = DB::select("select * from hospital_tests");
+
+   
+    return view('hospital_test', ['tests' => $tests]);
+    
+
+})->name('hospital_test');

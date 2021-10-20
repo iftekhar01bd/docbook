@@ -28,7 +28,7 @@
   <div class="right_container">
       <div class="top">
           <span></span>
-          <span style="font-weight: bold;">Email:</span><span> @docbook@gmail.com</span>
+          <span style="font-weight: bold;">Email:</span><span> docbook@gmail.com</span>
           <span style="color: red;">Emergency Call:</span><span style="font-weight: bold;"> +09992392939239</span>
           <button onclick="window.location='{{ url("/login") }}'" class="btn btn-primary btn-lg">Join</button>
 
@@ -65,8 +65,7 @@
                   <h1>Emergency?</h1>
                   <h4>Get Immidiate Consultation</h4>
                   <div class="d-grid gap-2 d-md-block">
-  <button class="btn btn-success" type="button">View Hospitals</button>
-  <button class="btn btn-danger" type="button">View Doctors</button>
+                    <button onclick="window.location='{{ url("/login") }}'" class="btn btn-primary btn-lg">Join Us</button>
 </div>
               </div>  
             </div>

@@ -189,7 +189,7 @@ class UserAuth extends Controller
                 'homeaddress' => 'required|max:255',
                 'chamberaddress' => 'required|max:255',
                 'hospital' => 'required|max:255',
-                'nidno' => 'required|max:255',
+                'nidno' => 'required|max:10',
                 'medcollege' => 'required|max:255',
                 'gradyear' => 'required|integer',
                 'bmdc' => 'required|max:255',
