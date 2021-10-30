@@ -93,7 +93,7 @@
                   </li>
             
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ route('followups') }}">Follow Ups</a>
+                    <a class="nav-link" href="{{ route('followups') }}">Follow-up</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{route('about')}}">About</a>
@@ -383,7 +383,7 @@
       });
 
                   $('#submit_pres').click(function(){     
-            alert('ajax working');       
+            alert('Prescription Submitted! :)');       
            $.ajax({  
             
                 method:"POST",  

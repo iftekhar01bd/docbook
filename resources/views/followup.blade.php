@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocBook : Followups</title>
+    <title>DocBook : Follow-ups</title>
 <!--    ------css link---------->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/follow.css">
@@ -49,7 +49,7 @@
                     <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ route('followups') }}">FOLLOW UPS</a>
+                    <a class="nav-link" href="{{ route('followups') }}">Follow-up</a>
                   </li>
                   
                   <li class="nav-item">
@@ -111,7 +111,7 @@
                     <a class="nav-link" href="">View Prescribed Posts</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ route('followups') }}">Follow Ups</a>
+                    <a class="nav-link" href="{{ route('followups') }}">Follow-up</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>

@@ -7,6 +7,7 @@
 <!--    ------css link---------->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="/css/viewpost.css">
 <!--    -------font awesome kit link------->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/ae163c3f97.js" crossorigin="anonymous"></script>
@@ -51,7 +52,7 @@
                   <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('followups') }}">Follow Ups</a>
+                  <a class="nav-link" href="{{ route('followups') }}">Follow-up</a>
                 </li>
 
                 <li class="nav-item">
@@ -151,7 +152,7 @@
    
   
 
-<div class="container" name="blogdisplay" id="blogdisplay">
+<div class="containerX" name="blogdisplay" id="blogdisplay">
  
 
   @foreach($blogs as $b)

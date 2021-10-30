@@ -53,7 +53,7 @@
                     <a class="nav-link" href="{{ route('consul') }}">Get Consultation</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ route('followups') }}">FOLLOW UPS</a>
+                    <a class="nav-link" href="{{ route('followups') }}">Follow-up</a>
                   </li>
                   
                   <li class="nav-item">
